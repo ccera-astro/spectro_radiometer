@@ -673,7 +673,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>spectro_helper.fft_log(fft_probed,fft2_probed,corr_probed,ifreq,samp_rate,longitude,enable_normalize,prefix,declination,rfilist,dcgain,fft_avg,mode)</value>
+      <value>spectro_helper.fft_log(fft_probed,fft2_probed,corr_probed,ifreq,samp_rate,longitude,enable_normalize,prefix,declination,rfilist,dcgain,fft_avg,mode,zerotime)</value>
     </param>
   </block>
   <block>
@@ -5380,7 +5380,7 @@ tpwr=-99
 first_time = 0
 pacet = time.time()
 import copy
-def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode):
+def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt):
     global fft_buffer
     global first_time
     global lastt
@@ -5482,6 +5482,16 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.write("%5.5f," % (frq/1.0e6))
                 f.write("%5.5f," % bw)
                 f.write("%5.1f," % decln)
+                
+                st = cur_sidereal(longitude)
+                st = st.split(",")
+                st_h = float(st[0])
+                st_h += float(st[1])/60.0
+                st_h += float(st[2])/3600.0
+                
+                if (math.abs(st_h - zt) &lt; (60.0/3600.0)):
+                    baseline_setter(1)
+                
 
 
                 for i in range(0,len(fft_buffer)):
@@ -5988,6 +5998,49 @@ def lmst_hours(pacer,longitude):
     <param>
       <key>stream_id</key>
       <value>Chan1</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(336, 1072)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>zerotime</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>SIdereal time for auto baseline set</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>eng_float</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>99.3</value>
     </param>
   </block>
   <connection>

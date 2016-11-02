@@ -19,7 +19,7 @@ tpwr=-99
 first_time = 0
 pacet = time.time()
 import copy
-def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode):
+def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt):
     global fft_buffer
     global first_time
     global lastt
@@ -121,6 +121,16 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.write("%5.5f," % (frq/1.0e6))
                 f.write("%5.5f," % bw)
                 f.write("%5.1f," % decln)
+                
+                st = cur_sidereal(longitude)
+                st = st.split(",")
+                st_h = float(st[0])
+                st_h += float(st[1])/60.0
+                st_h += float(st[2])/3600.0
+                
+                if (math.abs(st_h - zt) < (60.0/3600.0)):
+                    baseline_setter(1)
+                
 
 
                 for i in range(0,len(fft_buffer)):
