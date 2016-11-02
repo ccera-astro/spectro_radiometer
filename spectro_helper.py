@@ -127,16 +127,18 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 st_h = float(st[0])
                 st_h += float(st[1])/60.0
                 st_h += float(st[2])/3600.0
+                print "st_h is %f" % st_h
+                print "zt is %f" % zt
                 
-                if (math.abs(st_h - zt) < (60.0/3600.0)):
-                    baseline_setter(1)
-                
-
-
+                    
                 for i in range(0,len(fft_buffer)):
                     f.write("%6.2f," % tm[i])
                 f.write ("\n")
                 f.close()
+                
+                if (math.fabs(st_h - zt) < (60.0/3600.0)):
+                    print "Calling baseline_setter"
+                    baseline_setter(1)
             return 1
         
     return 0
