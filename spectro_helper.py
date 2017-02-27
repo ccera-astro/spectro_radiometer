@@ -37,19 +37,21 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     
     pacet = time.time()
     
-    
     if flist != "" and freq_mask_processed == False:
+        nmsks = 0
         freq_mask_processed = True
-        stf = frq-(bw/2)
+        stf = frq-(bw/2.0)
         incr = bw/2048.0
         flist = flist.split(",")
         for i in range(0,len(freq_mask)):
             for f in flist:
-                if math.abs(stf-float(f)) < incr:
-                    freq_mask[i] = 1.0e-12
+                if math.fabs(stf-float(f)) <= (incr*2.5):
+                    freq_mask[i] = 1.0e-15
+                    print "Setting mask at F %f position %d (%f)" % (float(f), i, incr*float(i))
+                    nmsks += 1
             stf += incr
+        print "Total mask percentage %f" % ((float(nmsks)/2048.0)*100.0)
                 
-    
     if fft_buffer[10] < -800:
         for i in range(0,len(fft_buffer)):
             fft_buffer[i] = p[i]
@@ -127,9 +129,6 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 st_h = float(st[0])
                 st_h += float(st[1])/60.0
                 st_h += float(st[2])/3600.0
-                print "st_h is %f" % st_h
-                print "zt is %f" % zt
-                
                     
                 for i in range(0,len(fft_buffer)):
                     f.write("%6.2f," % tm[i])
@@ -137,7 +136,6 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.close()
                 
                 if (math.fabs(st_h - zt) < (60.0/3600.0)):
-                    print "Calling baseline_setter"
                     baseline_setter(1)
             return 1
         
