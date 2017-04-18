@@ -4743,7 +4743,7 @@
     </param>
     <param>
       <key>sync</key>
-      <value></value>
+      <value>sync</value>
     </param>
   </block>
   <block>
