@@ -3359,7 +3359,7 @@
     </param>
     <param>
       <key>dc_offset_mode0</key>
-      <value>0</value>
+      <value>2</value>
     </param>
     <param>
       <key>corr0</key>
@@ -3371,7 +3371,7 @@
     </param>
     <param>
       <key>gain_mode0</key>
-      <value>True</value>
+      <value>False</value>
     </param>
     <param>
       <key>if_gain0</key>
@@ -3379,7 +3379,7 @@
     </param>
     <param>
       <key>iq_balance_mode0</key>
-      <value>2</value>
+      <value>1</value>
     </param>
     <param>
       <key>gain0</key>
