@@ -15,9 +15,14 @@ fft2_buffer = [0.0]*2048
 baseline_buffer=[0.0]*2048
 freq_mask=[1.0]*2048
 freq_mask_processed=False
-tpwr=-99
+tpwra=-99
+tpwrb=-99
 first_time = 0
 pacet = time.time()
+corr_sin = 1.0e-12
+corr_cos = 1.0e-12
+dpwr=0.0
+
 import copy
 def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt):
     global fft_buffer
@@ -25,11 +30,13 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     global lastt
     global lasttpt
     global baseline_buffer
-    global tpwr
+    global tpwra, tpwrb
+    global dpwr
     global freq_mask
     global freq_mask_processed
     global pacet
-    
+    global corr_cos, corr_sin
+
     preflist=prefix.split(",")
     
     if ((time.time() - pacet) < 0.05):
@@ -56,13 +63,15 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
         for i in range(0,len(fft_buffer)):
             fft_buffer[i] = p[i]
 
-    pwr = 0.0
+    pwra = 0.0
+    pwrb = 0.0
+    diff = 0.0
     a = 0.250 * ffa
     for i in range(0,len(fft_buffer)):
-        pwr += (math.pow(10.0,p[i]/10.0)*freq_mask[i])
+        pwra += (math.pow(10.0,p[i]/10.0)*freq_mask[i])
         q = p[i]
         if (mode == "diff" or mode == "differential"):
-            pwr -= math.pow(10.0,p2[i]/10.0)
+            pwrb += math.pow(10.0,p2[i]/10.0)
             q = math.pow(10.0,p[i]/10.0)
             q -= math.pow(10.0,p2[i]/10.0)
             if (q <= 0.0):
@@ -71,20 +80,48 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
    
         fft_buffer[i] = (a * q) + ((1.0 - a) * fft_buffer[i])
     
-    if (mode != "corr" and mode != "correlator" and mode != "interferometer"):
-        pwr = pwr * again
-    else:
-        pwr = corr.real * again
-    
-    if (tpwr < -10):
-        tpwr = pwr
-    
+
     atp=0.1
-    tpwr = (atp * pwr) + ((1.0 - atp)*tpwr)
+    #
+    # Gain settings
+    #
+    corr_a = corr.real * again
+    corr_b = corr.imag * again
+    pwra *= again
+    pwrb *= again
+    
+    #
+    # Prime the integrator
+    #
+    if (tpwra < -10):
+        tpwra = pwra
+        tpwrb = pwrb
+        
+    if (corr_cos < -1.0e-10):
+        corr_cos = corr_a
+        corr_sin = corr_b
+    
+    #
+    # Integration
+    #
+    corr_cos = (atp * corr_a) + ((1.0 - atp)*corr_cos)
+    corr_sin = (atp * corr_b) + ((1.0 - atp)*corr_sin)
+
+    tpwra = (atp * pwra) + ((1.0 - atp)*tpwra)
+    tpwrb = (atp * pwrb) + ((1.0 - atp)*tpwrb)
+    
+    diff = tpwra - tpwrb
 
     if (first_time == 0):
         first_time = int(time.time())
     
+    dpwr = tpwra    
+    if (mode == "differential" or mode == "diff"):
+        dpwr = diff
+    
+    if (mode == "interferometer" or mode == "corr" or mode == "correlator"):
+        dpwr = corr_cos
+
     #
     # Allow integrators to settle, etc, so don't write "ramp up" data
     #
@@ -101,8 +138,10 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.write("%5.5f," % (frq/1.0e6))
                 f.write("%5.5f," % bw)
                 f.write("%5.1f," % decln)
-                f.write("%10.7f," % tpwr)
-                f.write("%10.7f,%10.7f\n" %  (corr.real, corr.imag))
+                f.write("%10.7f," % tpwra)
+                f.write("%10.7f," % tpwrb)
+                f.write("%10.7f," % diff)
+                f.write("%10.7f,%10.7f\n" %  (corr_cos, corr_sin))
                 f.close()
         
         if (time.time() - lastt) >= 20:
@@ -226,12 +265,12 @@ TPLEN=3600
 tp_vect=[0.0]*TPLEN
 def get_tp_vect(pacer):
     global tp_vect
-    global tpwr
+    global dpwr
     global TPLEN
     
     
     tp_vect=tp_vect[0:(TPLEN-1)]
-    tp_vect=[tpwr]+tp_vect
+    tp_vect=[dpwr]+tp_vect
     
     if len(tp_vect) != TPLEN:
         print "Blarf!!! short TP_VECT"
@@ -239,6 +278,7 @@ def get_tp_vect(pacer):
     return (tp_vect)
             
 
+tpwr = 0 
 def lmst_hours(pacer,longitude):
     x = lmst_string(1,longitude)
     
