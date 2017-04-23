@@ -6352,6 +6352,7 @@ import time
 import ephem
 import operator
 import math
+import numpy
 
 
 
@@ -6414,20 +6415,47 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     pwrb = 0.0
     diff = 0.0
     a = 0.250 * ffa
-    for i in range(0,len(fft_buffer)):
-        pwra += (math.pow(10.0,p[i]/10.0)*freq_mask[i])
-        q = p[i]
-        if (mode == "diff" or mode == "differential"):
-            pwrb += math.pow(10.0,p2[i]/10.0)
-            q = math.pow(10.0,p[i]/10.0)
-            q -= math.pow(10.0,p2[i]/10.0)
-            if (q &lt;= 0.0):
-                q = 1.0e-12
-            q = math.log10(q)
-   
-        fft_buffer[i] = (a * q) + ((1.0 - a) * fft_buffer[i])
     
-
+    #
+    # Use numpy to process the log10-FFT buffers
+    #
+    ta = numpy.divide(p,[10.0]*len(p))
+    ta = numpy.power([10.0]*len(ta),ta)
+    ta = numpy.multiply(ta,freq_mask)
+    pwra = numpy.sum(ta)
+    
+    tb = numpy.divide(p2,[10.0]*len(p))
+    tb = numpy.power([10.0]*len(tb),tb)
+    tb = numpy.multiply(tb,freq_mask)
+    pwrb = numpy.sum(tb)
+    
+    #
+    # Differential FFT
+    #
+    td = numpy.subtract(tb,ta)
+    tf = ta
+    if (mode == "diff" or mode == "differential"):
+        tf = td
+    
+    #
+    # To guard against log10 blowing up
+    #
+    tf = numpy.add([1.0e-20]*len(tf), tf)
+    
+    #
+    # Turn linears back into logs
+    #
+    tf = numpy.log10(tf)
+    
+    #
+    # Integrate as a vector
+    #
+    tf = numpy.multiply([a]*len(tf),tf)
+    tf2 = numpy.multiply([1.0-a]*len(tf), fft_buffer)
+    tf = numpy.add(tf2,tf)
+    
+    fft_buffer = tf
+    
     atp=0.1
     #
     # Gain settings
