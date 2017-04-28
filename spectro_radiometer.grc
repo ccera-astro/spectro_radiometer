@@ -6022,7 +6022,7 @@
     <key>single_pole_iir_filter_xx</key>
     <param>
       <key>alpha</key>
-      <value>1.0/(samp_rate*10)</value>
+      <value>1.0/(samp_rate*25)</value>
     </param>
     <param>
       <key>alias</key>
@@ -6073,7 +6073,7 @@
     <key>single_pole_iir_filter_xx</key>
     <param>
       <key>alpha</key>
-      <value>1.0/((frate*240)*1.25*10)</value>
+      <value>1.0/((frate*240)*1.25*5)</value>
     </param>
     <param>
       <key>alias</key>
@@ -6456,7 +6456,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     
     fft_buffer = tf
     
-    atp=0.05
+    atp=0.03
     #
     # Gain settings
     #

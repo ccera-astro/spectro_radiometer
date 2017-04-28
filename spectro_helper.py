@@ -109,7 +109,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     
     fft_buffer = tf
     
-    atp=0.05
+    atp=0.03
     #
     # Gain settings
     #
