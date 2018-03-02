@@ -45,11 +45,18 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     
     pacet = time.time()
     
+    if (len(p) != len(freq_mask)):
+        fft_buffer = [-900.0]*len(p)
+        fft2_buffer = [0.0]*len(p)
+        baseline_buffer=[0.0]*len(p)
+        freq_mask=[1.0]*len(p)
+    
+    fplen = float(len(p))
     if flist != "" and freq_mask_processed == False:
         nmsks = 0
         freq_mask_processed = True
         stf = frq-(bw/2.0)
-        incr = bw/2048.0
+        incr = bw/fplen
         flist = flist.split(",")
         for i in range(0,len(freq_mask)):
             for f in flist:
@@ -58,7 +65,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                     print "Setting mask at F %f position %d (%f)" % (float(f), i, incr*float(i))
                     nmsks += 1
             stf += incr
-        print "Total mask percentage %f" % ((float(nmsks)/2048.0)*100.0)
+        print "Total mask percentage %f" % ((float(nmsks)/fplen)*100.0)
                 
     if fft_buffer[10] < -800:
         for i in range(0,len(fft_buffer)):
@@ -109,7 +116,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     
     fft_buffer = tf
     
-    atp=0.03
+    atp=0.02
     #
     # Gain settings
     #
@@ -283,7 +290,7 @@ def baseline_clearer(thing):
     global baseline_buffer
     
     if thing != 0:
-        baseline_buffer = [0.0]*2048
+        baseline_buffer = [0.0]*len(fft_buffer)
 
 def lmst_string(pacer,longitude):
     return cur_sidereal(longitude).replace(",", ":")

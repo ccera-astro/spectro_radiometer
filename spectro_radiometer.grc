@@ -10,7 +10,7 @@
     </param>
     <param>
       <key>window_size</key>
-      <value>1800,2200</value>
+      <value>2200,2700</value>
     </param>
     <param>
       <key>category</key>
@@ -93,7 +93,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1648, 220)</value>
+      <value>(1680, 220)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -105,7 +105,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>[0.0]*2048</value>
+      <value>[0.0]*fftsize</value>
     </param>
   </block>
   <block>
@@ -132,7 +132,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>[1.0]*2048</value>
+      <value>[1.0]*fftsize</value>
     </param>
   </block>
   <block>
@@ -151,7 +151,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(40, 1200)</value>
+      <value>(24, 1956)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -210,7 +210,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(712, 189)</value>
+      <value>(888, 172)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -237,7 +237,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(576, 189)</value>
+      <value>(736, 172)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -268,7 +268,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(176, 416)</value>
+      <value>(312, 2132)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -323,7 +323,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(776, 344)</value>
+      <value>(792, 356)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -354,7 +354,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(472, 429)</value>
+      <value>(480, 452)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -389,7 +389,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>curr_tx</value>
+      <value>curr_tp_vect</value>
     </param>
     <param>
       <key>value</key>
@@ -416,7 +416,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(640, 1216)</value>
+      <value>(368, 2340)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -459,7 +459,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(48, 968)</value>
+      <value>(176, 1956)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -558,7 +558,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(192, 878)</value>
+      <value>(24, 2084)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -644,7 +644,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>[-100.0]*2048</value>
+      <value>[-100.0]*fftsize</value>
     </param>
     <param>
       <key>poll_rate</key>
@@ -667,7 +667,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(504, 1067)</value>
+      <value>(232, 2252)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -762,7 +762,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(576, 252)</value>
+      <value>(616, 172)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -801,7 +801,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(920, 248)</value>
+      <value>(928, 252)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -813,7 +813,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>[-100.0]*2048</value>
+      <value>[-100.0]*fftsize</value>
     </param>
     <param>
       <key>poll_rate</key>
@@ -832,7 +832,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(912, 853)</value>
+      <value>(912, 684)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -844,14 +844,14 @@
     </param>
     <param>
       <key>value</key>
-      <value>(samp_rate/1.0e6)/2048</value>
+      <value>(samp_rate/1.0e6)/fftsize</value>
     </param>
   </block>
   <block>
     <key>variable</key>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>Fringe rate</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -859,7 +859,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1200, 1452)</value>
+      <value>(1032, 1660)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -872,33 +872,6 @@
     <param>
       <key>value</key>
       <value>((180.0/3.14159)*wlam/baseline)/math.cos(math.radians(decln))</value>
-    </param>
-  </block>
-  <block>
-    <key>variable</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(32, 293)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>freq</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>float(frequency)</value>
     </param>
   </block>
   <block>
@@ -921,7 +894,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(896, 1100)</value>
+      <value>(24, 2332)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -948,7 +921,8 @@
     <key>variable</key>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>Input filter
+0.0 if disabled</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -956,7 +930,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(544, 332)</value>
+      <value>(560, 284)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -979,7 +953,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>freq</value>
+      <value>frequency</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -987,7 +961,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(304, 982)</value>
+      <value>(456, 2076)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1026,7 +1000,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(456, 982)</value>
+      <value>(24, 2172)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1061,7 +1035,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(792, 853)</value>
+      <value>(904, 500)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1073,7 +1047,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>(((samp_rate/2048)/ifreq)*299792)*-1.0</value>
+      <value>(((samp_rate/fftsize)/ifreq)*299792)*-1.0</value>
     </param>
   </block>
   <block>
@@ -1088,7 +1062,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(872, 1180)</value>
+      <value>(1056, 1076)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1115,7 +1089,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(8, 160)</value>
+      <value>(16, 100)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1150,7 +1124,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(896, 1020)</value>
+      <value>(24, 2252)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1189,7 +1163,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(32, 416)</value>
+      <value>(456, 1956)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1232,7 +1206,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(696, 853)</value>
+      <value>(904, 564)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1271,7 +1245,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(920, 360)</value>
+      <value>(928, 356)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1283,7 +1257,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>[-100.0]*2048</value>
+      <value>[-100.0]*fftsize</value>
     </param>
     <param>
       <key>poll_rate</key>
@@ -1314,7 +1288,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(928, 472)</value>
+      <value>(1064, 252)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1326,7 +1300,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>[-100.0]*2048</value>
+      <value>[-100.0]*fftsize</value>
     </param>
     <param>
       <key>poll_rate</key>
@@ -1353,7 +1327,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(720, 1070)</value>
+      <value>(368, 2252)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1380,7 +1354,7 @@
     <key>variable</key>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>Wavelength in meters</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -1388,7 +1362,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1200, 1516)</value>
+      <value>(1168, 1660)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1400,7 +1374,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>299792000.0/float(ifreq)</value>
+      <value>299792000.0/ifreq</value>
     </param>
   </block>
   <block>
@@ -1419,7 +1393,50 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(640, 380)</value>
+      <value>(1352, 2172)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>abw</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Analog  bandwidth</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>eng_float</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>4.0e6</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(984, 2388)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1462,7 +1479,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(328, 1176)</value>
+      <value>(1104, 2276)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1487,6 +1504,49 @@
     <param>
       <key>value</key>
       <value>99.3</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1360, 2068)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>bbgain</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Baseband Gain</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>eng_float</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>5</value>
     </param>
   </block>
   <block>
@@ -1537,7 +1597,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -1552,7 +1612,7 @@
     </param>
     <param>
       <key>const</key>
-      <value>curr_tx</value>
+      <value>curr_tp_vect</value>
     </param>
     <param>
       <key>affinity</key>
@@ -1564,7 +1624,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(544, 837)</value>
+      <value>(848, 1012)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1599,7 +1659,9 @@
     </param>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>Add a teensy weensy value here
+To keep from SIGFPE
+When stream is all 0s.</value>
     </param>
     <param>
       <key>const</key>
@@ -1615,7 +1677,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(600, 1412)</value>
+      <value>(552, 1252)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1662,7 +1724,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(296, 1628)</value>
+      <value>(72, 1644)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1682,7 +1744,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -1705,7 +1767,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(912, 1628)</value>
+      <value>(576, 1740)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1725,7 +1787,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -1768,7 +1830,7 @@
     </param>
     <param>
       <key>n</key>
-      <value>(samp_rate/2048)/50</value>
+      <value>(samp_rate/fftsize)/50</value>
     </param>
     <param>
       <key>type</key>
@@ -1776,7 +1838,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -1819,7 +1881,7 @@
     </param>
     <param>
       <key>n</key>
-      <value>(samp_rate/2048)/50</value>
+      <value>(samp_rate/fftsize)/50</value>
     </param>
     <param>
       <key>type</key>
@@ -1827,7 +1889,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -1850,7 +1912,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1248, 972)</value>
+      <value>(1368, 884)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1889,7 +1951,8 @@
     </param>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>The basic correlation operation
+Conjugate multiply of the two streams</value>
     </param>
     <param>
       <key>affinity</key>
@@ -1901,7 +1964,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1560, 1296)</value>
+      <value>(1464, 1272)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1932,7 +1995,7 @@
     </param>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>Allow for phase-adjust on one side</value>
     </param>
     <param>
       <key>const</key>
@@ -1948,7 +2011,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1144, 1292)</value>
+      <value>(1216, 1268)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1987,7 +2050,7 @@
     </param>
     <param>
       <key>const</key>
-      <value>[0.0]*2048</value>
+      <value>[0.0]*fftsize</value>
     </param>
     <param>
       <key>affinity</key>
@@ -2023,7 +2086,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -2034,7 +2097,7 @@
     </param>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>When != 0, this turns on DC blocking</value>
     </param>
     <param>
       <key>const</key>
@@ -2050,7 +2113,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1384, 1116)</value>
+      <value>(1384, 1092)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2117,11 +2180,11 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
     <param>
       <key>k</key>
-      <value>-20*math.log10(2048)</value>
+      <value>-20*math.log10(fftsize)</value>
     </param>
     <param>
       <key>n</key>
@@ -2168,11 +2231,11 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
     <param>
       <key>k</key>
-      <value>-20*math.log10(2048)</value>
+      <value>-20*math.log10(fftsize)</value>
     </param>
     <param>
       <key>n</key>
@@ -2203,7 +2266,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(360, 801)</value>
+      <value>(648, 900)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2254,7 +2317,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(288, 1332)</value>
+      <value>(216, 1372)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2278,7 +2341,7 @@
     </param>
     <param>
       <key>num_items</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
     <param>
       <key>vlen</key>
@@ -2305,7 +2368,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(680, 1332)</value>
+      <value>(680, 1364)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2329,7 +2392,7 @@
     </param>
     <param>
       <key>num_items</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
     <param>
       <key>vlen</key>
@@ -2356,7 +2419,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1528, 992)</value>
+      <value>(1624, 888)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2407,7 +2470,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(496, 908)</value>
+      <value>(848, 916)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2458,7 +2521,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(208, 1184)</value>
+      <value>(1168, 2172)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2505,7 +2568,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1656, 1008)</value>
+      <value>(1784, 904)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2536,7 +2599,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(192, 1071)</value>
+      <value>(1168, 1972)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2579,7 +2642,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(200, 695)</value>
+      <value>(1096, 2388)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2622,7 +2685,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(48, 695)</value>
+      <value>(1008, 2068)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2646,7 +2709,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"rtl=0"</value>
+      <value>"rtl=0 file=/dev/zero,rate=5e6"</value>
     </param>
   </block>
   <block>
@@ -2685,7 +2748,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -2712,7 +2775,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(368, 12)</value>
+      <value>(416, 12)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2771,7 +2834,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(240, 300)</value>
+      <value>(400, 308)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2842,7 +2905,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -2865,7 +2928,7 @@
     </param>
     <param>
       <key>fft_size</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
     <param>
       <key>forward</key>
@@ -2873,7 +2936,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(288, 1464)</value>
+      <value>(72, 1492)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2905,7 +2968,7 @@
     </param>
     <param>
       <key>window</key>
-      <value>window.blackmanharris(2048)</value>
+      <value>window.blackmanharris(fftsize)</value>
     </param>
   </block>
   <block>
@@ -2928,7 +2991,7 @@
     </param>
     <param>
       <key>fft_size</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
     <param>
       <key>forward</key>
@@ -2936,7 +2999,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(888, 1480)</value>
+      <value>(552, 1588)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2968,7 +3031,7 @@
     </param>
     <param>
       <key>window</key>
-      <value>window.blackmanharris(2048)</value>
+      <value>window.blackmanharris(fftsize)</value>
     </param>
   </block>
   <block>
@@ -2987,7 +3050,50 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(328, 423)</value>
+      <value>(1512, 2172)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>fftsize</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>FFT size</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>intx</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>2048</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1464, 1972)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3007,11 +3113,11 @@
     </param>
     <param>
       <key>type</key>
-      <value>string</value>
+      <value>eng_float</value>
     </param>
     <param>
       <key>value</key>
-      <value>"1420.4058e6"</value>
+      <value>1420.4058e6</value>
     </param>
   </block>
   <block>
@@ -3030,7 +3136,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(368, 695)</value>
+      <value>(1296, 2380)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3058,6 +3164,49 @@
     </param>
   </block>
   <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1360, 1972)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>ifgain</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>IF Gain</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>eng_float</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>5</value>
+    </param>
+  </block>
+  <block>
     <key>import</key>
     <param>
       <key>alias</key>
@@ -3073,7 +3222,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(40, 364)</value>
+      <value>(16, 172)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3104,7 +3253,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(312, 879)</value>
+      <value>(1392, 2276)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3147,7 +3296,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(48, 878)</value>
+      <value>(312, 1956)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -3262,7 +3411,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(472, 696)</value>
+      <value>(1392, 2380)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3297,7 +3446,10 @@
     </param>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>We synthesize a strip chart by updating
+a vector from a function probe
+That vector contains the current strip-chart
+values.</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -3305,7 +3457,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(544, 772)</value>
+      <value>(544, 956)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3336,7 +3488,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(520, 148)</value>
+      <value>(1072, 380)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3367,7 +3519,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1528, 1068)</value>
+      <value>(1472, 804)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3376,6 +3528,102 @@
     <param>
       <key>id</key>
       <value>note_2</value>
+    </param>
+    <param>
+      <key>note</key>
+      <value></value>
+    </param>
+  </block>
+  <block>
+    <key>note</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value>******* GUI ZONE ******
+GUI CONTROL OBJECTS GO HERE!!</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(296, 1852)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>note_3</value>
+    </param>
+    <param>
+      <key>note</key>
+      <value></value>
+    </param>
+  </block>
+  <block>
+    <key>note</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value>**** PARAMETER ZONE *****
+COMMAND-LINE PARAMS GO HERE!!</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1200, 1868)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>note_4</value>
+    </param>
+    <param>
+      <key>note</key>
+      <value></value>
+    </param>
+  </block>
+  <block>
+    <key>note</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value>The two main FFT pathways
+Connected to the input filters</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(288, 1188)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>note_5</value>
     </param>
     <param>
       <key>note</key>
@@ -3394,15 +3642,15 @@
     </param>
     <param>
       <key>bb_gain0</key>
-      <value>12 if "airspy" in device else 20</value>
+      <value>bbgain</value>
     </param>
     <param>
       <key>bw0</key>
-      <value>samp_rate*1.75</value>
+      <value>abw</value>
     </param>
     <param>
       <key>dc_offset_mode0</key>
-      <value>0</value>
+      <value>2</value>
     </param>
     <param>
       <key>corr0</key>
@@ -3418,7 +3666,7 @@
     </param>
     <param>
       <key>if_gain0</key>
-      <value>15 if "airspy" in device else 20</value>
+      <value>ifgain</value>
     </param>
     <param>
       <key>iq_balance_mode0</key>
@@ -3834,15 +4082,15 @@
     </param>
     <param>
       <key>bb_gain1</key>
-      <value>12 if "airspy" in device else 20</value>
+      <value>bbgain</value>
     </param>
     <param>
       <key>bw1</key>
-      <value>samp_rate*1.75</value>
+      <value>abw</value>
     </param>
     <param>
       <key>dc_offset_mode1</key>
-      <value>0</value>
+      <value>2</value>
     </param>
     <param>
       <key>corr1</key>
@@ -3858,7 +4106,7 @@
     </param>
     <param>
       <key>if_gain1</key>
-      <value>15 if "airspy" in device else 20</value>
+      <value>ifgain</value>
     </param>
     <param>
       <key>iq_balance_mode1</key>
@@ -4686,7 +4934,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(0, 77)</value>
+      <value>(136, 20)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4805,7 +5053,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(48, 607)</value>
+      <value>(1256, 2276)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -5068,7 +5316,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
     <param>
       <key>x_axis_label</key>
@@ -5131,7 +5379,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(712, 908)</value>
+      <value>(1056, 900)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -5610,7 +5858,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
     <param>
       <key>x_axis_label</key>
@@ -5881,7 +6129,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
     <param>
       <key>x_axis_label</key>
@@ -5932,7 +6180,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(200, 783)</value>
+      <value>(944, 2276)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -5983,7 +6231,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(304, 1724)</value>
+      <value>(64, 1724)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6007,7 +6255,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -6034,7 +6282,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(912, 1708)</value>
+      <value>(768, 1804)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6058,7 +6306,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -6085,7 +6333,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1088, 1204)</value>
+      <value>(1112, 1156)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6136,7 +6384,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1256, 1044)</value>
+      <value>(1352, 1004)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6211,7 +6459,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -6262,7 +6510,7 @@
     </param>
     <param>
       <key>vlen</key>
-      <value>2048</value>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -6281,7 +6529,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(192, 966)</value>
+      <value>(312, 2036)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -6435,11 +6683,18 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     
     pacet = time.time()
     
+    if (len(p) != len(freq_mask)):
+        fft_buffer = [-900.0]*len(p)
+        fft2_buffer = [0.0]*len(p)
+        baseline_buffer=[0.0]*len(p)
+        freq_mask=[1.0]*len(p)
+    
+    fplen = float(len(p))
     if flist != "" and freq_mask_processed == False:
         nmsks = 0
         freq_mask_processed = True
         stf = frq-(bw/2.0)
-        incr = bw/2048.0
+        incr = bw/fplen
         flist = flist.split(",")
         for i in range(0,len(freq_mask)):
             for f in flist:
@@ -6448,7 +6703,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                     print "Setting mask at F %f position %d (%f)" % (float(f), i, incr*float(i))
                     nmsks += 1
             stf += incr
-        print "Total mask percentage %f" % ((float(nmsks)/2048.0)*100.0)
+        print "Total mask percentage %f" % ((float(nmsks)/fplen)*100.0)
                 
     if fft_buffer[10] &lt; -800:
         for i in range(0,len(fft_buffer)):
@@ -6499,7 +6754,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     
     fft_buffer = tf
     
-    atp=0.03
+    atp=0.02
     #
     # Gain settings
     #
@@ -6673,7 +6928,7 @@ def baseline_clearer(thing):
     global baseline_buffer
     
     if thing != 0:
-        baseline_buffer = [0.0]*2048
+        baseline_buffer = [0.0]*len(fft_buffer)
 
 def lmst_string(pacer,longitude):
     return cur_sidereal(longitude).replace(",", ":")
@@ -6711,7 +6966,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>A bunch of helper bits and pieces for logging, etc</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -6719,7 +6974,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(576, 108)</value>
+      <value>(560, 20)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6746,7 +7001,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(48, 783)</value>
+      <value>(1008, 2164)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6812,7 +7067,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(584, 1548)</value>
+      <value>(240, 1796)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6839,7 +7094,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1144, 1716)</value>
+      <value>(792, 1932)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6866,7 +7121,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(416, 220)</value>
+      <value>(440, 116)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6893,7 +7148,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(416, 284)</value>
+      <value>(432, 236)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -7001,7 +7256,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(120, 1332)</value>
+      <value>(40, 1372)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -7028,7 +7283,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(496, 1332)</value>
+      <value>(416, 1356)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -7082,7 +7337,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(936, 1348)</value>
+      <value>(944, 1380)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -7113,7 +7368,7 @@ def lmst_hours(pacer,longitude):
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(336, 1072)</value>
+      <value>(1168, 2076)</value>
     </param>
     <param>
       <key>_rotation</key>
