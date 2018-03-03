@@ -23,8 +23,28 @@ pacet = time.time()
 corr_sin = 1.0e-12
 corr_cos = 1.0e-12
 dpwr=0.0
-
 import copy
+
+def do_annotation(ra,dec,baseline,annotation,bw,abw,freq,srate,prefix):
+    ltp = time.gmtime()
+    if len(annotation) <= 0:
+		return True
+    fn = "%s%04d%02d%02d-annotation.txt" % (prefix, ltp.tm_year, ltp.tm_mon, ltp.tm_mday)
+    fp = open(fn, "a")
+    fp.write ("Annotation update: %04d%02d%02d-%02d:%02d:%02d\n" % 
+        (ltp.tm_year, ltp.tm_mon, ltp.tm_mday, ltp.tm_hour, ltp.tm_min, ltp.tm_sec))
+    fp.write ("RA: %6.2f\n" % ra)
+    fp.write ("DEC: %6.2f\n" % dec)
+    fp.write ("Baseline length: %6.2fm\n" % baseline)
+    fp.write ("Annotation: %s\n" % annotation)
+    fp.write ("Input Filter Bandwidth: %6.2fMHz\n" % (bw/1.0e6))
+    fp.write ("Analog Bandwidth: %6.2fMHz\n" % (abw/1.0e6))
+    fp.write ("Frequency: %8.4fMHz\n" % (freq/1.0e6))
+    fp.write ("Sample rate: %6.2fMsps\n\n" % (srate/1.0e6))
+    fp.close()
+    return True
+    
+    
 def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt):
     global fft_buffer
     global first_time
@@ -323,4 +343,205 @@ def lmst_hours(pacer,longitude):
     hours += float(x[2])/3600.0
     
     return hours
+
+#
+#
+# Calculations for automated fringe-stopping
+#
+# We are called on a regular basis to produce a complex rotation value that is
+#  applied to one leg of the interferometer, to reduce the fringe frequency to
+#  close-to zero, thus allowing longer integration times.
+#
+def ha (ra,longit):
+    #
+    # First get current sidereal time as as HH:MM:SS string
+    #
+    lmst = cur_sidereal (longit)
+    parts = lmst.split(",")
+    
+    #
+    # Re-express lmst (string) as a decimal hours
+    #
+    lmst = float(parts[0])
+    lmst += float(parts[1]) / 60.0
+    lmst += float(parts[2]) / 3600.0
+    
+    #
+    # Now compute relative hour-angle between us, and the object in question (at some RA)
+    #   When we're done, we have the relative hour-angle in radians
+    #
+    h = ra - lmst
+    return (h)
+#
+# Phase accumulator
+#
+phase_accum = 0.0
+
+#
+# For time-delta calcs
+#
+last_time_phase = -99.0
+
+#
+# Earth rotation in radians/second
+#
+earth = math.radians(360.0 / 86400.0)
+
+#
+# Since part of the calculation only needs to be done when baseline or
+#  frequency changes, we keep 'em global
+gbaseline = 0.0
+gfreq = 0.0
+basefreqrot = 0.0
+
+#
+# Another part only changes when dec/latit changes
+#
+gdec = -99.0
+glatit = -99.0
+declatrot = 0.0
+
+#
+# The combination of the two
+#
+baserot = 0.0
+
+#
+# Speed of light, in case it wasn't obvious :)
+#
+C = 299792000.0
+
+#
+#
+# Compute phase-rotation value based either on manual input, or automatic
+#   fringe rotation
+#
+# pacer   - ignored, simply used as a "dummy" variable in the flow-graph to
+#           make sure that we're called regularly.
+# ra       - The RA in fractional hours
+# dec      - The DEC in fractional degrees
+# longit   - Our geographic longitude
+# latit    - Our geographic latitude
+# baseline - Baseline length, in meters
+# ena      - Whether automagic or manual is in use
+# manval   - The manual value
+# freq     - The sky frequency
+#
+#
+# These calculations assume a meridian-transit type setup, with a strictly east-west baseline
+#
+def fringe_stop (pacer, ra, dec, longit, latit, baseline, ena, manval, freq):
+    global phase_accum
+    global last_time_phase
+    global earth
+    global gbaseline
+    global gfreq
+    global basefreqrot
+    global declatrot
+    global gdec
+    global glatit
+    global baserot
+ 
+    #
+    # Just compute the fixed-value from the degrees input by the UI
+    #
+    if ena == False:
+        radians = math.radians(manval)
+        return (complex(math.cos(radians),math.sin(radians)))
+
+   
+    #
+    # Handle initialization of our time-delta calculator
+    #
+    if last_time_phase < 0:
+        last_time_phase = time.time()
+
+    #
+    # Compute time delta compared to last-time
+    #
+    now = time.time()
+    tdelt = now - last_time_phase
+    
+    #
+    # Remember "now" for next time
+    #
+    last_time_phase = now
+    
+    changed = False
+    
+    #
+    # If baseline or freq parameters have changed
+    #
+    if baseline != gbaseline or freq != gfreq:
+        gbaseline = baseline
+        gfreq = freq
+        basefreqrot = (baseline * earth)/(C / freq)
+        changed = True
+    
+    #
+    # If dec or latit changes
+    #
+    if dec != gdec or latit != glatit:
+        gdec = dec
+        glatit = latit
+        declatrot = math.cos(math.radians(dec))*math.cos(math.radians(latit))
+        changed = True
+    
+    #
+    # Update the combined "baserot"
+    #
+    if changed == True:
+        baserot = basefreqrot * declatrot
+        
+    #
+    # First get current sidereal time as as HH:MM:SS string
+    #
+    lmst = cur_sidereal (longit)
+    parts = lmst.split(",")
+    
+    #
+    # Re-express lmst (string) as a decimal hours
+    #
+    lmst = float(parts[0])
+    lmst += float(parts[1]) / 60.0
+    lmst += float(parts[2]) / 3600.0
+    
+    #
+    # Now compute relative hour-angle between us, and the object in question (at some RA)
+    #   When we're done, we have the relative hour-angle in radians
+    #
+    h = ra - lmst
+    h *= math.radians((360.0 / 24.0))
+        
+    #
+    # Compute fringe rate in radians/hour
+    #
+    # h       - relative hour-angle, in radians between us and source
+    #
+    # Other parameters to the equation don't change with time, so they're
+    #   efficiently pre-computed above, and re-computed when the input
+    #   parameters change
+    #
+    F = baserot*math.sin(h)
+    
+    #
+    # Because I get lost in the units, the above may be in radians/hour
+    #   or radians/second so we can just adjust this scaling for the calculation below
+    #
+    scale = 1.0/3600.0
+    
+    #
+    # Update the phase accumulator (stored in radians)
+    # Handle phase-wrap gracefully
+    # (although, the Python transcendentals handle this just fine themselves)
+    #
+    phase_accum += tdelt*(F * scale)
+    if phase_accum > 2.0*math.pi:
+        phase_accum -= (2.0*math.pi)
+    
+    #
+    # We return a value that can be used by the phase rotator in the flow-graph
+    #
+    rval = complex(math.cos(phase_accum),math.sin(phase_accum))
+    return (rval)
 
