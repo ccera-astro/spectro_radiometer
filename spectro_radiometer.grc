@@ -2728,6 +2728,49 @@ Conjugate multiply of the two streams</value>
     </param>
   </block>
   <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(984, 2480)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>clock</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Clock Source</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>string</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>default</value>
+    </param>
+  </block>
+  <block>
     <key>blocks_probe_signal_x</key>
     <param>
       <key>alias</key>
@@ -5172,11 +5215,11 @@ Connected to the input filters</value>
     </param>
     <param>
       <key>clock_source0</key>
-      <value></value>
+      <value>clock</value>
     </param>
     <param>
       <key>time_source0</key>
-      <value></value>
+      <value>ppstime</value>
     </param>
     <param>
       <key>clock_source1</key>
@@ -5256,7 +5299,50 @@ Connected to the input filters</value>
     </param>
     <param>
       <key>sync</key>
+      <value>sync</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
       <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1176, 2480)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>ppstime</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Time Source</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>string</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>internal</value>
     </param>
   </block>
   <block>
