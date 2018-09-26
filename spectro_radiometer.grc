@@ -1475,7 +1475,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1064, 252)</value>
+      <value>(1064, 296)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -1535,6 +1535,60 @@
     <param>
       <key>type</key>
       <value>string</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1072, 180)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>win</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>fft.window.blackmanharris(fftsize)</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1072, 236)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>winsum</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>sum(map(lambda x:x*x, win))</value>
     </param>
   </block>
   <block>
@@ -2387,7 +2441,7 @@ Conjugate multiply of the two streams</value>
     </param>
     <param>
       <key>k</key>
-      <value>-20*math.log10(fftsize)</value>
+      <value>-20*math.log10(fftsize)-10.0*math.log10(winsum/fftsize)-20*math.log10(1)</value>
     </param>
     <param>
       <key>n</key>
@@ -2438,7 +2492,7 @@ Conjugate multiply of the two streams</value>
     </param>
     <param>
       <key>k</key>
-      <value>-20*math.log10(fftsize)</value>
+      <value>-20*math.log10(fftsize)-10.0*math.log10(winsum/fftsize)-20*math.log10(1)</value>
     </param>
     <param>
       <key>n</key>
@@ -3520,6 +3574,37 @@ Conjugate multiply of the two streams</value>
     </param>
   </block>
   <block>
+    <key>import</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(16, 228)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>import_0_0</value>
+    </param>
+    <param>
+      <key>import</key>
+      <value>from gnuradio import fft</value>
+    </param>
+  </block>
+  <block>
     <key>parameter</key>
     <param>
       <key>alias</key>
@@ -3825,7 +3910,7 @@ values.</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1072, 380)</value>
+      <value>(1072, 388)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -6854,7 +6939,7 @@ Connected to the input filters</value>
     <key>single_pole_iir_filter_xx</key>
     <param>
       <key>alpha</key>
-      <value>0.25</value>
+      <value>fft_avg*0.05</value>
     </param>
     <param>
       <key>alias</key>
@@ -6905,7 +6990,7 @@ Connected to the input filters</value>
     <key>single_pole_iir_filter_xx</key>
     <param>
       <key>alpha</key>
-      <value>0.25</value>
+      <value>fft_avg*0.05</value>
     </param>
     <param>
       <key>alias</key>
