@@ -6939,7 +6939,7 @@ Connected to the input filters</value>
     <key>single_pole_iir_filter_xx</key>
     <param>
       <key>alpha</key>
-      <value>fft_avg*0.05</value>
+      <value>fft_avg*0.02</value>
     </param>
     <param>
       <key>alias</key>
@@ -6990,7 +6990,7 @@ Connected to the input filters</value>
     <key>single_pole_iir_filter_xx</key>
     <param>
       <key>alpha</key>
-      <value>fft_avg*0.05</value>
+      <value>fft_avg*0.02</value>
     </param>
     <param>
       <key>alias</key>
