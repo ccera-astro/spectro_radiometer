@@ -11,7 +11,7 @@ import numpy
 
 lastt = time.time()
 lasttpt = time.time()
-fft_buffer = [-900.0]*2048
+fft_buffer = [1.0e-25]*2048
 fft2_buffer = [0.0]*2048
 baseline_buffer=[0.0]*2048
 freq_mask=[1.0]*2048
@@ -66,7 +66,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     pacet = time.time()
     
     if (len(p) != len(freq_mask)):
-        fft_buffer = [-900.0]*len(p)
+        fft_buffer = [1.0e-25]*len(p)
         fft2_buffer = [0.0]*len(p)
         baseline_buffer=[0.0]*len(p)
         freq_mask=[1.0]*len(p)
@@ -87,9 +87,8 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
             stf += incr
         print "Total mask percentage %f" % ((float(nmsks)/fplen)*100.0)
                 
-    if fft_buffer[10] < -800:
-        for i in range(0,len(fft_buffer)):
-            fft_buffer[i] = p[i]
+    if fft_buffer[10] < 1.0e-24:
+        fft_buffer = numpy.copy(p)
 
     pwra = 0.0
     pwrb = 0.0
@@ -97,7 +96,8 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     a = 0.250 * ffa
     
     #
-    # Use numpy to process the log10-FFT buffers
+    # Use numpy to process the log10-FFT buffers and turn them
+    #  into linear values
     #
     ta = numpy.divide(p,[10.0]*len(p))
     ta = numpy.power([10.0]*len(ta),ta)
@@ -123,16 +123,17 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     tf = numpy.add([1.0e-20]*len(tf), tf)
     
     #
-    # Turn linears back into logs
-    #
-    tf = numpy.log10(tf)
-    
-    #
     # Integrate as a vector
     #
     tf = numpy.multiply([a]*len(tf),tf)
     tf2 = numpy.multiply([1.0-a]*len(tf), fft_buffer)
     tf = numpy.add(tf2,tf)
+    
+    #
+    # Turn linears back into logs
+    #
+    #tf = numpy.log10(tf)
+    #tf = numpy.muliply(10.0*len(tf),tf)
     
     fft_buffer = tf
     
@@ -292,7 +293,7 @@ def curr_diff(pace,normalize):
         x = map(operator.sub, norm(smooth(fft_buffer)), norm(smooth(baseline_buffer)))
     else:
         x = map(operator.sub, smooth(fft_buffer), smooth(baseline_buffer))
-    return x
+    return numpy.multiply(numpy.log10(x),[10.0]*len(x))
     
 def norm(vect):
     m=min(vect)
