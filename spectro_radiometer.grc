@@ -440,7 +440,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>spectro_helper.curr_diff(fft_probed,enable_normalize)</value>
+      <value>spectro_helper.curr_diff(fft_probed,enable_normalize,fftsize)</value>
     </param>
   </block>
   <block>
@@ -6939,7 +6939,7 @@ Connected to the input filters</value>
     <key>single_pole_iir_filter_xx</key>
     <param>
       <key>alpha</key>
-      <value>fft_avg*0.02</value>
+      <value>fft_avg*0.01</value>
     </param>
     <param>
       <key>alias</key>
@@ -6990,7 +6990,7 @@ Connected to the input filters</value>
     <key>single_pole_iir_filter_xx</key>
     <param>
       <key>alpha</key>
-      <value>fft_avg*0.02</value>
+      <value>fft_avg*0.01</value>
     </param>
     <param>
       <key>alias</key>
@@ -7255,7 +7255,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     pwra = 0.0
     pwrb = 0.0
     diff = 0.0
-    a = 0.250 * ffa
+    a = 0.05 * ffa
     
     #
     # Use numpy to process the log10-FFT buffers and turn them
@@ -7448,23 +7448,19 @@ def curr_findx(pace):
 
 
 
-def curr_diff(pace,normalize):
+def curr_diff(pace,normalize,expected):
     global fft_buffer
     global baseline_buffer
     
+    if (len(fft_buffer) != expected):
+		return ([-120.0]*expected)
+    
     if (numpy.sum(baseline_buffer) == 0.0):
-        if normalize:
-            x = map(operator.sub, norm(smooth(fft_buffer)), norm(smooth(baseline_buffer)))
-        else:
-            x = map(operator.sub, smooth(fft_buffer), smooth(baseline_buffer))
+        x = smooth(fft_buffer)
     else:
         y = map(operator.add, baseline_buffer, [1.0e-24]*len(baseline_buffer))
-        if normalize:
-            x = map(operator.truediv, norm(smooth(fft_buffer)), norm(smooth(y)))
-        else:
-            x = map(operator.truediv, smooth(fft_buffer), smooth(y))
+        x = map(operator.truediv, smooth(fft_buffer), smooth(y))
     
-        
     return numpy.multiply(numpy.log10(x),[10.0]*len(x))
     
 def norm(vect):
@@ -7477,8 +7473,8 @@ def baseline_setter(thing):
     global fft_buffer
     
     if thing != 0:
-        baseline_buffer = smooth(fft_buffer,a=0.75)
-        print baseline_buffer
+        baseline_buffer = smooth(fft_buffer,a=0.5)
+        baseline_buffer = numpy.multiply(baseline_buffer,[0.99]*len(baseline_buffer))
 
 def baseline_clearer(thing):
     global baseline_buffer
