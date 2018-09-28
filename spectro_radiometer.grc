@@ -7460,7 +7460,8 @@ def curr_diff(pace,normalize,expected):
     else:
         y = map(operator.add, baseline_buffer, [1.0e-24]*len(baseline_buffer))
         x = map(operator.truediv, smooth(fft_buffer), smooth(y))
-    
+    x = numpy.add(x, [1.0e-24]*len(x))
+    x = numpy.abs(x)
     return numpy.multiply(numpy.log10(x),[10.0]*len(x))
     
 def norm(vect):
