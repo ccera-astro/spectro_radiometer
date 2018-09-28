@@ -21,10 +21,6 @@
       <value></value>
     </param>
     <param>
-      <key>copyright</key>
-      <value></value>
-    </param>
-    <param>
       <key>description</key>
       <value></value>
     </param>
@@ -7194,7 +7190,7 @@ import copy
 def do_annotation(ra,dec,baseline,annotation,bw,abw,freq,srate,prefix):
     ltp = time.gmtime()
     if len(annotation) &lt;= 0:
-		return True
+        return True
     fn = "%s%04d%02d%02d-annotation.txt" % (prefix, ltp.tm_year, ltp.tm_mon, ltp.tm_mday)
     fp = open(fn, "a")
     fp.write ("Annotation update: %04d%02d%02d-%02d:%02d:%02d\n" % 
@@ -7455,10 +7451,20 @@ def curr_findx(pace):
 def curr_diff(pace,normalize):
     global fft_buffer
     global baseline_buffer
-    if normalize:
-        x = map(operator.sub, norm(smooth(fft_buffer)), norm(smooth(baseline_buffer)))
+    
+    if (numpy.sum(baseline_buffer) == 0.0):
+        if normalize:
+            x = map(operator.sub, norm(smooth(fft_buffer)), norm(smooth(baseline_buffer)))
+        else:
+            x = map(operator.sub, smooth(fft_buffer), smooth(baseline_buffer))
     else:
-        x = map(operator.sub, smooth(fft_buffer), smooth(baseline_buffer))
+        y = map(operator.add, baseline_buffer, [1.0e-24]*len(baseline_buffer))
+        if normalize:
+            x = map(operator.truediv, norm(smooth(fft_buffer)), norm(smooth(y)))
+        else:
+            x = map(operator.truediv, smooth(fft_buffer), smooth(y))
+    
+        
     return numpy.multiply(numpy.log10(x),[10.0]*len(x))
     
 def norm(vect):
@@ -7472,9 +7478,11 @@ def baseline_setter(thing):
     
     if thing != 0:
         baseline_buffer = smooth(fft_buffer,a=0.75)
+        print baseline_buffer
 
 def baseline_clearer(thing):
     global baseline_buffer
+    global fft_buffer
     
     if thing != 0:
         baseline_buffer = [0.0]*len(fft_buffer)
