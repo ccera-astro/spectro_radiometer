@@ -667,6 +667,33 @@
     </param>
     <param>
       <key>_coordinate</key>
+      <value>(1600, 1796)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>ebw</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>bw/1.0e6 if bw &gt; 0.0 else (samp_rate*0.8)/1.0e6</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
       <value>(48, 541)</value>
     </param>
     <param>
@@ -1330,6 +1357,114 @@
     </param>
     <param>
       <key>_coordinate</key>
+      <value>(1600, 1652)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>pchanwidth</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>samp_rate/fbsize</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1504, 1732)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>pparam</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>prefix+"-"+gmdate+"-psr.params" if psrmode != 0 else "/dev/null"</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1608, 1732)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>pparamstr</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>"%.2f,%.2f,%.4f,%.4f,%.4f,%d\n" % (psrate/1e3, pchanwidth/1e3, ifreq/1.0e6,samp_rate/1.0e6,ebw,fbsize)</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1504, 1652)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>psrate</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>samp_rate/fftsize</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
       <value>(1616, 1556)</value>
     </param>
     <param>
@@ -1697,6 +1832,33 @@
     <param>
       <key>value</key>
       <value>299792000.0/ifreq</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1504, 1796)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>wrstatus</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>open(pparam, "w").write(pparamstr)</value>
     </param>
   </block>
   <block>
@@ -2141,10 +2303,10 @@ When stream is all 0s.</value>
     <param>
       <key>comment</key>
       <value>Write pulsar "filter bank" data.
-128 bytes of channel 0 data
-128 bytes of channel 1 data
-128 bytes of channel 0 data
-128 bytes of channel 1 data
+fbsize bytes of channel 0 data
+fbsize bytes of channel 1 data
+fbsize bytes of channel 0 data
+fbsize bytes of channel 1 data
 ...and so  on</value>
     </param>
     <param>
@@ -2181,7 +2343,7 @@ When stream is all 0s.</value>
     </param>
     <param>
       <key>vlen</key>
-      <value>128</value>
+      <value>fbsize</value>
     </param>
   </block>
   <block>
@@ -2294,7 +2456,7 @@ When stream is all 0s.</value>
     </param>
     <param>
       <key>decim</key>
-      <value>int(fftsize/128) if psrmode != 0 else 1000</value>
+      <value>int(fftsize/fbsize) if psrmode != 0 else 1000</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -2345,7 +2507,7 @@ When stream is all 0s.</value>
     </param>
     <param>
       <key>decim</key>
-      <value>int(fftsize/128) if psrmode != 0 else 1000</value>
+      <value>int(fftsize/fbsize) if psrmode != 0 else 1000</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -2432,7 +2594,7 @@ When stream is all 0s.</value>
     </param>
     <param>
       <key>vlen</key>
-      <value>128</value>
+      <value>fbsize</value>
     </param>
   </block>
   <block>
@@ -3088,7 +3250,7 @@ Conjugate multiply of the two streams</value>
     </param>
     <param>
       <key>num_items</key>
-      <value>128</value>
+      <value>fbsize</value>
     </param>
     <param>
       <key>vlen</key>
@@ -3139,7 +3301,7 @@ Conjugate multiply of the two streams</value>
     </param>
     <param>
       <key>num_items</key>
-      <value>128</value>
+      <value>fbsize</value>
     </param>
     <param>
       <key>vlen</key>
@@ -3622,6 +3784,53 @@ Conjugate multiply of the two streams</value>
     <param>
       <key>value</key>
       <value>"rtl=0 file=/dev/zero,rate=5e6"</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1472, 2480)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>fbsize</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>PSR Filterbank size</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>hide</key>
+      <value>none</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>intx</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>128</value>
     </param>
   </block>
   <block>
@@ -4669,6 +4878,38 @@ Connected to the input filters</value>
     <param>
       <key>id</key>
       <value>note_5</value>
+    </param>
+    <param>
+      <key>note</key>
+      <value></value>
+    </param>
+  </block>
+  <block>
+    <key>note</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value>Compute a bunch of parameters to
+write to a parameters file for psrmode != 0</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1696, 1804)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>note_6</value>
     </param>
     <param>
       <key>note</key>
