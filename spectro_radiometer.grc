@@ -2448,7 +2448,8 @@ fbsize bytes of channel 1 data
     </param>
     <param>
       <key>comment</key>
-      <value></value>
+      <value>We use this as a cheap way of doing a
+decimate-in-bins from the larger FFT</value>
     </param>
     <param>
       <key>affinity</key>
@@ -2464,7 +2465,7 @@ fbsize bytes of channel 1 data
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(352, 1724)</value>
+      <value>(296, 1676)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -3434,7 +3435,7 @@ Conjugate multiply of the two streams</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(304, 1668)</value>
+      <value>(320, 1596)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -4910,6 +4911,41 @@ write to a parameters file for psrmode != 0</value>
     <param>
       <key>id</key>
       <value>note_6</value>
+    </param>
+    <param>
+      <key>note</key>
+      <value></value>
+    </param>
+  </block>
+  <block>
+    <key>note</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value>None of this pulsar stuff is
+fully fleshed out yet
+Probably fold in code from
+pulsar_filterbank when I'm 
+happy with it.</value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1776, 1636)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>note_7</value>
     </param>
     <param>
       <key>note</key>
