@@ -6252,11 +6252,11 @@ happy with it.</value>
     </param>
     <param>
       <key>_enabled</key>
-      <value>True</value>
+      <value>1</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(128, 88)</value>
+      <value>(128, 20)</value>
     </param>
     <param>
       <key>_rotation</key>
