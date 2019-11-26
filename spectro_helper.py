@@ -45,7 +45,7 @@ def do_annotation(ra,dec,baseline,annotation,bw,abw,freq,srate,prefix):
     return True
     
     
-def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt):
+def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt,decfile):
     global fft_buffer
     global first_time
     global lastt
@@ -94,6 +94,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     pwrb = 0.0
     diff = 0.0
     a = 0.05 * ffa
+
     
     #
     # Use numpy to process the log10-FFT buffers and turn them
@@ -121,20 +122,17 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     # To guard against log10 blowing up
     #
     tf = numpy.add([1.0e-20]*len(tf), tf)
-    
+
     #
     # Integrate as a vector
     #
     tf = numpy.multiply([a]*len(tf),tf)
     tf2 = numpy.multiply([1.0-a]*len(tf), fft_buffer)
     tf = numpy.add(tf2,tf)
-    
+
     #
-    # Turn linears back into logs
+    # Update it BEFORE we convert to log10, dummy
     #
-    #tf = numpy.log10(tf)
-    #tf = numpy.muliply(10.0*len(tf),tf)
-    
     fft_buffer = tf
     
     atp=0.02
@@ -182,6 +180,10 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     # Allow integrators to settle, etc, so don't write "ramp up" data
     #
     if ((time.time() - first_time) > 90):
+        if (decfile != None and decfile != "" and os.path.exists(decfile)):
+            fp = open(decfile)
+            decln = float(fp.readline().strip('\n'))
+            fp.close()
         if (time.time() - lasttpt) >= 2:
             lasttpt = time.time()
             
@@ -226,7 +228,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 st_h += float(st[2])/3600.0
                     
                 for i in range(0,len(fft_buffer)):
-                    f.write("%6.2f," % tm[i])
+                    f.write("%6.2f," % (math.log10(tm[i])*10.0))
                 f.write ("\n")
                 f.close()
                 
