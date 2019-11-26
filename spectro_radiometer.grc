@@ -1621,7 +1621,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>((samp_rate/2)/ifreq)*299792</value>
+      <value>spectro_helper.doppler_start(ifreq,dfreq,samp_rate)</value>
     </param>
   </block>
   <block>
@@ -3785,6 +3785,53 @@ Conjugate multiply of the two streams</value>
     <param>
       <key>value</key>
       <value>"rtl=0 file=/dev/zero,rate=5e6"</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1568, 2376)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>dfreq</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Alternet Doppler Cente Frequency</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>hide</key>
+      <value>none</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>eng_float</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>0.0</value>
     </param>
   </block>
   <block>
@@ -8400,7 +8447,7 @@ def curr_diff(pace,normalize,expected):
     global baseline_buffer
     
     if (len(fft_buffer) != expected):
-		return ([-120.0]*expected)
+        return ([-120.0]*expected)
     
     if (numpy.sum(baseline_buffer) == 0.0):
         x = smooth(fft_buffer)
@@ -8664,6 +8711,16 @@ def fringe_stop (pacer, ra, dec, longit, latit, baseline, ena, manval, freq):
     rval = complex(math.cos(phase_accum),math.sin(phase_accum))
     return (rval)
 
+def doppler_start(ifreq, dfreq, bw):
+    if (dfreq == 0.0):
+        stf = ifreq - bw/2.0
+        dop = (ifreq - stf) / ifreq
+        dop *= 299792.0
+    else:
+        stf = ifreq - bw/2.0
+        dop = (dfreq - stf) / dfreq
+        dop *= 299792.0
+    return dop
 </value>
     </param>
     <param>

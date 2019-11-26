@@ -291,7 +291,7 @@ def curr_diff(pace,normalize,expected):
     global baseline_buffer
     
     if (len(fft_buffer) != expected):
-		return ([-120.0]*expected)
+        return ([-120.0]*expected)
     
     if (numpy.sum(baseline_buffer) == 0.0):
         x = smooth(fft_buffer)
@@ -555,3 +555,13 @@ def fringe_stop (pacer, ra, dec, longit, latit, baseline, ena, manval, freq):
     rval = complex(math.cos(phase_accum),math.sin(phase_accum))
     return (rval)
 
+def doppler_start(ifreq, dfreq, bw):
+    if (dfreq == 0.0):
+        stf = ifreq - bw/2.0
+        dop = (ifreq - stf) / ifreq
+        dop *= 299792.0
+    else:
+        stf = ifreq - bw/2.0
+        dop = (dfreq - stf) / dfreq
+        dop *= 299792.0
+    return dop
