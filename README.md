@@ -87,6 +87,7 @@ The application takes many options and command line parameters:
 | --zerotime=ZEROTIME | Set SIdereal time for auto baseline set [default=99.3] |
 |  --clock=CLOCK | Set Clock Source [default=default] |
 | --ppstime=PPSTIME | Set Time Source [default=default] |
+| --dfreq=DFREQ |Set alternate doppler-center [default=0.0 |
 
 
 The *–abw* parameter controls the analog bandwidth, in Hz,  on the hardware—this options does nothing on some hardware, and actually sets the pre-ADC bandwidth on others.
@@ -132,6 +133,9 @@ The `–zerotime` parameter can be used to specify an LMST during which no spect
 The `–clock` parameter specifies the reference clock source.  Not all hardware supports this option.
 
 The `–ppstime` parameter specifies the source of the 1PPS signal. Not all hardware supports this option.
+
+The `--dfreq` parameter specifies an alternate doppler-center frequency against which doppler offsets are calculated for
+  display purposes.
 
 ### Device options
 The *spectro_radiometer* application uses the *gr-osmosdr* abstraction within GNU Radio to provide support for many different types of SDR hardware.
