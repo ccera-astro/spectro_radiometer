@@ -179,7 +179,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     #
     # Allow integrators to settle, etc, so don't write "ramp up" data
     #
-    if ((time.time() - first_time) > 30):
+    if ((time.time() - first_time) > 20):
         if (decfile != None and decfile != "" and os.path.exists(decfile)):
             fp = open(decfile)
             decln = float(fp.readline().strip('\n'))
@@ -203,7 +203,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.write("%10.7f,%10.7f\n" %  (corr_cos, corr_sin))
                 f.close()
         
-        if (time.time() - lastt) >= 20:
+        if (time.time() - lastt) >= 5:
             lastt = time.time()
             ltp = time.gmtime()
             tm = smooth(fft_buffer)

@@ -1,5 +1,7 @@
 spectro_radiometer.py: spectro_radiometer.grc
 	grcc -d . spectro_radiometer.grc
+	cat spectro_radiometer.py|sed -e "s/.toAscii()//" >foo.tmp.py
+	mv foo.tmp.py spectro_radiometer.py
 
 install: spectro_radiometer.py spectro_helper.py
 	cp spectro_radiometer.py /usr/local/bin
