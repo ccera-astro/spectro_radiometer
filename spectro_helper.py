@@ -179,11 +179,12 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     #
     # Allow integrators to settle, etc, so don't write "ramp up" data
     #
-    if ((time.time() - first_time) > 90):
+    if ((time.time() - first_time) > 20):
         if (decfile != None and decfile != "" and os.path.exists(decfile)):
             fp = open(decfile)
             decln = float(fp.readline().strip('\n'))
             fp.close()
+            
         if (time.time() - lasttpt) >= 2:
             lasttpt = time.time()
             
@@ -202,16 +203,25 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.write("%10.7f,%10.7f\n" %  (corr_cos, corr_sin))
                 f.close()
         
-        if (time.time() - lastt) >= 20:
+        if (time.time() - lastt) >= 5:
             lastt = time.time()
             ltp = time.gmtime()
             tm = smooth(fft_buffer)
             bb = smooth(baseline_buffer)
-            if normalize:
-                tm = norm(smooth(fft_buffer))
-                bb = norm(baseline_buffer)
-            tm = map(operator.sub, tm, bb)
-            
+            l10tm = numpy.log10(tm)
+            l10tm = numpy.multiply(l10tm, [10.0]*len(tm))
+            tm = l10tm
+            #
+            # Originally used baseline_buffer.count(0.0)
+            #  But LAWDY, that seems to be broken in weird ways.
+            #
+            # If baseline_buffer contains non-zero values
+            #
+            if (numpy.sum(baseline_buffer) != 0.0):
+				l10bb = numpy.log10(bb)
+				l10bb = numpy.multiply(l10bb, [10.0]*len(bb))
+				tm = numpy.subtract(l10tm, l10bb)
+				
             for prefix in preflist:
                 fn = "%s%04d%02d%02d-spec.csv" % (prefix, ltp.tm_year, ltp.tm_mon, ltp.tm_mday)
                 f = open (fn, "a")
@@ -228,7 +238,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 st_h += float(st[2])/3600.0
                     
                 for i in range(0,len(fft_buffer)):
-                    f.write("%6.2f," % (math.log10(tm[i])*10.0))
+                    f.write("%6.2f," % tm[i])
                 f.write ("\n")
                 f.close()
                 
