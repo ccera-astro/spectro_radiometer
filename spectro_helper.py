@@ -14,6 +14,7 @@ lasttpt = time.time()
 fft_buffer = [1.0e-25]*2048
 fft2_buffer = [0.0]*2048
 baseline_buffer=[0.0]*2048
+baseline_buffer2=[0.0]*2048
 freq_mask=[1.0]*2048
 freq_mask_processed=False
 tpwra=-99
@@ -23,6 +24,7 @@ pacet = time.time()
 corr_sin = 1.0e-12
 corr_cos = 1.0e-12
 dpwr=0.0
+apwr=0.0
 import copy
 
 def do_annotation(ra,dec,baseline,annotation,bw,abw,freq,srate,prefix):
@@ -51,8 +53,11 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     global lastt
     global lasttpt
     global baseline_buffer
+    global baseline_buffer2
+    global fft2_buffer
     global tpwra, tpwrb
     global dpwr
+    global apwr
     global freq_mask
     global freq_mask_processed
     global pacet
@@ -110,30 +115,32 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     tb = numpy.multiply(tb,freq_mask)
     pwrb = numpy.sum(tb)
     
-    #
-    # Differential FFT
-    #
-    td = numpy.subtract(tb,ta)
-    tf = ta
-    if (mode == "diff" or mode == "differential"):
-        tf = td
+    ffts = [ta, tb]
     
-    #
-    # To guard against log10 blowing up
-    #
-    tf = numpy.add([1.0e-20]*len(tf), tf)
+    w = 0
+    for  tf in ffts:
+        #
+        # To guard against log10 blowing up
+        #
+        tf = numpy.add([1.0e-22]*len(tf), tf)
 
-    #
-    # Integrate as a vector
-    #
-    tf = numpy.multiply([a]*len(tf),tf)
-    tf2 = numpy.multiply([1.0-a]*len(tf), fft_buffer)
-    tf = numpy.add(tf2,tf)
+        #
+        # Integrate as a vector
+        #
+        tf = numpy.multiply([a]*len(tf),tf)
+        tf2 = numpy.multiply([1.0-a]*len(tf), fft_buffer if w == 0 else fft2_buffer)
+        tf = numpy.add(tf2,tf)
 
-    #
-    # Update it BEFORE we convert to log10, dummy
-    #
-    fft_buffer = tf
+        #
+        # Update it BEFORE we convert to log10, dummy
+        #
+        if (w == 0):
+            fft_buffer = tf
+        else:
+            fft2_buffer = tf
+        
+        w += 1
+    
     
     atp=0.02
     #
@@ -165,25 +172,25 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     tpwrb = (atp * pwrb) + ((1.0 - atp)*tpwrb)
     
     diff = tpwra - tpwrb
+    added = tpwra + tpwrb
 
     if (first_time == 0):
         first_time = int(time.time())
     
-    dpwr = tpwra    
+    dpwr = tpwra   
+    apwr = 0.0
     if (mode == "differential" or mode == "diff"):
         dpwr = diff
+        apwr = added
     
     if (mode == "interferometer" or mode == "corr" or mode == "correlator"):
         dpwr = corr_cos
+        apwr = corr_sin
 
     #
     # Allow integrators to settle, etc, so don't write "ramp up" data
     #
     if ((time.time() - first_time) > 20):
-        if (decfile != None and decfile != "" and os.path.exists(decfile)):
-            fp = open(decfile)
-            decln = float(fp.readline().strip('\n'))
-            fp.close()
             
         if (time.time() - lasttpt) >= 2:
             lasttpt = time.time()
@@ -203,47 +210,34 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.write("%10.7f,%10.7f\n" %  (corr_cos, corr_sin))
                 f.close()
         
-        if (time.time() - lastt) >= 5:
+        if (time.time() - lastt) >= 15:
             lastt = time.time()
             ltp = time.gmtime()
-            tm = smooth(fft_buffer)
-            bb = smooth(baseline_buffer)
-            l10tm = numpy.log10(tm)
-            l10tm = numpy.multiply(l10tm, [10.0]*len(tm))
-            tm = l10tm
-            #
-            # Originally used baseline_buffer.count(0.0)
-            #  But LAWDY, that seems to be broken in weird ways.
-            #
-            # If baseline_buffer contains non-zero values
-            #
-            if (numpy.sum(baseline_buffer) != 0.0):
-				l10bb = numpy.log10(bb)
-				l10bb = numpy.multiply(l10bb, [10.0]*len(bb))
-				tm = numpy.subtract(l10tm, l10bb)
-				
-            for prefix in preflist:
-                fn = "%s%04d%02d%02d-spec.csv" % (prefix, ltp.tm_year, ltp.tm_mon, ltp.tm_mday)
-                f = open (fn, "a")
-                f.write ("%02d,%02d,%02d," % (ltp.tm_hour, ltp.tm_min, ltp.tm_sec))
-                f.write ("%s," % cur_sidereal(longitude))
-                f.write("%5.5f," % (frq/1.0e6))
-                f.write("%5.5f," % bw)
-                f.write("%5.1f," % decln)
-                
-                st = cur_sidereal(longitude)
-                st = st.split(",")
-                st_h = float(st[0])
-                st_h += float(st[1])/60.0
-                st_h += float(st[2])/3600.0
+            
+            ffts = [fft_buffer, fft2_buffer]
+            for w in [0,1]:
+                for prefix in preflist:
+                    fn = "%s%04d%02d%02d-%d-spec.csv" % (prefix, ltp.tm_year, ltp.tm_mon, ltp.tm_mday, w)
+                    f = open (fn, "a")
+                    f.write ("%02d,%02d,%02d," % (ltp.tm_hour, ltp.tm_min, ltp.tm_sec))
+                    f.write ("%s," % cur_sidereal(longitude))
+                    f.write("%5.5f," % (frq/1.0e6))
+                    f.write("%5.5f," % bw)
+                    f.write("%5.1f," % decln)
                     
-                for i in range(0,len(fft_buffer)):
-                    f.write("%6.2f," % tm[i])
-                f.write ("\n")
-                f.close()
-                
-                if (math.fabs(st_h - zt) < (60.0/3600.0)):
-                    baseline_setter(1)
+                    st = cur_sidereal(longitude)
+                    st = st.split(",")
+                    st_h = float(st[0])
+                    st_h += float(st[1])/60.0
+                    st_h += float(st[2])/3600.0
+                        
+                    for i in range(0,len(ffts[w])):
+                        f.write("%6.2f," % (math.log10(ffts[w][i])*10.0))
+                    f.write ("\n")
+                    f.close()
+                    
+                    if (math.fabs(st_h - zt) < (60.0/3600.0)):
+                        baseline_setter(1)
             return 1
         
     return 0
@@ -297,42 +291,56 @@ def curr_findx(pace):
     return cur
 
 
-
-def curr_diff(pace,normalize,expected):
+#
+# Get (baselined) FFT buffer, whichever is selected for display
+#
+def curr_diff(pace,normalize,expected,which):
     global fft_buffer
     global baseline_buffer
+    global fft2_buffer
+    global baseline_buffer2
+    
+    inbuf = [fft_buffer, fft2_buffer]
+    basebuf = [baseline_buffer, baseline_buffer2]
     
     if (len(fft_buffer) != expected):
         return ([-120.0]*expected)
     
-    if (numpy.sum(baseline_buffer) == 0.0):
-        x = smooth(fft_buffer)
+    if (numpy.sum(basebuf[which]) == 0.0):
+        x = smooth(inbuf[which])
     else:
-        y = map(operator.add, baseline_buffer, [1.0e-24]*len(baseline_buffer))
-        x = map(operator.truediv, smooth(fft_buffer), smooth(y))
+        y = map(operator.add, basebuf[which], [1.0e-24]*len(basebuf[which]))
+        x = map(operator.truediv, smooth(inbuf[which]), smooth(y))
     x = numpy.add(x, [1.0e-24]*len(x))
     x = numpy.abs(x)
     return numpy.multiply(numpy.log10(x),[10.0]*len(x))
     
-def norm(vect):
+def not_the_norm(vect):
     m=min(vect)
     s=[m]*len(vect)
     return map(operator.sub, vect, s)
 
 def baseline_setter(thing):
     global baseline_buffer
+    global baseline_buffer2
     global fft_buffer
+    global fft_buffer2
     
     if thing != 0:
         baseline_buffer = smooth(fft_buffer,a=0.5)
-        baseline_buffer = numpy.multiply(baseline_buffer,[0.99]*len(baseline_buffer))
+        baseline_buffer = numpy.multiply(baseline_buffer,[0.95]*len(baseline_buffer))
+        baseline_buffer2 = smooth(fft2_buffer,a=0.5)
+        baseline_buffer2 = numpy.multiply(baseline_buffer2, [0.95]*len(baseline_buffer2))
 
 def baseline_clearer(thing):
     global baseline_buffer
     global fft_buffer
+    global baseline_buffer2
+    global fft2_buffer
     
     if thing != 0:
         baseline_buffer = [0.0]*len(fft_buffer)
+        baseline_buffer2 = [0.0]*len(fft2_buffer)
 
 def lmst_string(pacer,longitude):
     return cur_sidereal(longitude).replace(",", ":")
@@ -340,8 +348,10 @@ def lmst_string(pacer,longitude):
 
 TPLEN=3600
 tp_vect=[0.0]*TPLEN
+tp_vect2=[0.0]*TPLEN
 def get_tp_vect(pacer):
     global tp_vect
+    global tp_vect2
     global dpwr
     global TPLEN
     
@@ -349,10 +359,13 @@ def get_tp_vect(pacer):
     tp_vect=tp_vect[0:(TPLEN-1)]
     tp_vect=[dpwr]+tp_vect
     
+    tp_vect2=tp_vect2[0:(TPLEN-1)]
+    tp_vect2=[apwr]+tp_vect2
+    
     if len(tp_vect) != TPLEN:
         print "Blarf!!! short TP_VECT"
     
-    return (tp_vect)
+    return ([tp_vect,tp_vect2])
             
 
 tpwr = 0 
@@ -577,3 +590,36 @@ def doppler_start(ifreq, dfreq, bw):
         dop = (dfreq - stf) / dfreq
         dop *= 299792.0
     return dop
+
+ui_decln = [time.time(), None]
+f_decln = [time.time(), None]
+def get_decln(decln,decfile,dummy):
+    global ui_decln
+    global f_decln
+    try:
+        newdec = open(decfile,"r").readline().strip("\n")
+        newdec = float(newdec)
+        if (newdec != f_decln):
+            f_decln = [time.time(), none]
+    except:
+        pass
+    
+    if (decln != ui_decln):
+        ui_decln = [time.time(), decln]
+
+    if (f_decln[0] > ui_decln[0]):
+        return(f_decln[1])
+    else:
+        return(ui_decln[1])
+ 
+def plotlabel(mode, which):
+    w1 = {"total" : "TP", "tp" : "TP", "diff" : "Diff", "differential" : "Diff", "interf" : "Cos", "interferometer" : "Cos",
+        "correlator" : "Cos"}
+    w2 = {"total" : "Zero", "tp" : "Zero", "diff" : "Sum", "differential" : "Sum", "interf" : "Sin", "interferometer" : "Sin",
+        "correlator" : "Sin"}
+    
+    ary = [w1,w2]
+    
+    di = ary[which]
+    return (di[mode])
+
