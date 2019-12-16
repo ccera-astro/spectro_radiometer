@@ -90,60 +90,6 @@
     </param>
   </block>
   <block>
-    <key>variable</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1680, 220)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>OFFvec</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>[0.0]*fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>variable</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1536, 220)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>ONvec</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>[1.0]*fftsize</value>
-    </param>
-  </block>
-  <block>
     <key>variable_qtgui_label</key>
     <param>
       <key>comment</key>
@@ -483,7 +429,34 @@
     </param>
     <param>
       <key>value</key>
-      <value>spectro_helper.curr_diff(fft_probed,enable_normalize,fftsize,wchan)</value>
+      <value>spectro_helper.curr_diff(fft_probed,enable_normalize,fftsize,0)</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(480, 364)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>curr_dx2</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>spectro_helper.curr_diff(fft_probed,enable_normalize,fftsize,1)</value>
     </param>
   </block>
   <block>
@@ -1612,6 +1585,33 @@
     </param>
     <param>
       <key>_coordinate</key>
+      <value>(1024, 584)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>spec_labels</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>spectro_helper.get_spec_labels(mode)</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
       <value>(904, 564)</value>
     </param>
     <param>
@@ -1847,7 +1847,7 @@
     </param>
     <param>
       <key>label</key>
-      <value>Spectral Channel</value>
+      <value>Waterfall Chan</value>
     </param>
     <param>
       <key>labels</key>
@@ -2214,7 +2214,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(528, 605)</value>
+      <value>(512, 604)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -2341,6 +2341,57 @@
     <param>
       <key>vlen</key>
       <value>3600</value>
+    </param>
+  </block>
+  <block>
+    <key>blocks_add_const_vxx</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>const</key>
+      <value>curr_dx2</value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(512, 684)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_add_const_vxx_0_1</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>float</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>fftsize</value>
     </param>
   </block>
   <block>
@@ -6940,7 +6991,7 @@ happy with it.</value>
     </param>
     <param>
       <key>label1</key>
-      <value></value>
+      <value>spec_labels[0]</value>
     </param>
     <param>
       <key>width1</key>
@@ -6972,7 +7023,7 @@ happy with it.</value>
     </param>
     <param>
       <key>label2</key>
-      <value></value>
+      <value>spec_labels[1]</value>
     </param>
     <param>
       <key>width2</key>
@@ -7104,7 +7155,7 @@ happy with it.</value>
     </param>
     <param>
       <key>nconnections</key>
-      <value>1</value>
+      <value>2</value>
     </param>
     <param>
       <key>ref_level</key>
@@ -7152,7 +7203,7 @@ happy with it.</value>
     </param>
     <param>
       <key>y_units</key>
-      <value>"Ch:%d dB" % wchan</value>
+      <value>"dB"</value>
     </param>
   </block>
   <block>
@@ -7183,7 +7234,7 @@ happy with it.</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1136, 828)</value>
+      <value>(1088, 788)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -7482,7 +7533,7 @@ happy with it.</value>
     </param>
     <param>
       <key>label1</key>
-      <value></value>
+      <value>spec_labels[0]</value>
     </param>
     <param>
       <key>width1</key>
@@ -7514,7 +7565,7 @@ happy with it.</value>
     </param>
     <param>
       <key>label2</key>
-      <value></value>
+      <value>spec_labels[1]</value>
     </param>
     <param>
       <key>width2</key>
@@ -7646,7 +7697,7 @@ happy with it.</value>
     </param>
     <param>
       <key>nconnections</key>
-      <value>1</value>
+      <value>2</value>
     </param>
     <param>
       <key>ref_level</key>
@@ -7694,277 +7745,6 @@ happy with it.</value>
     </param>
     <param>
       <key>y_units</key>
-      <value>"Ch:%d dB" % wchan</value>
-    </param>
-  </block>
-  <block>
-    <key>qtgui_vector_sink_f</key>
-    <param>
-      <key>autoscale</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>average</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1560, 292)</value>
-    </param>
-    <param>
-      <key>gui_hint</key>
-      <value>spec_tab@2</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>grid</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>qtgui_vector_sink_f_1</value>
-    </param>
-    <param>
-      <key>alpha1</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>color1</key>
-      <value>"blue"</value>
-    </param>
-    <param>
-      <key>label1</key>
-      <value></value>
-    </param>
-    <param>
-      <key>width1</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alpha10</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>color10</key>
-      <value>"dark blue"</value>
-    </param>
-    <param>
-      <key>label10</key>
-      <value></value>
-    </param>
-    <param>
-      <key>width10</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alpha2</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>color2</key>
-      <value>"red"</value>
-    </param>
-    <param>
-      <key>label2</key>
-      <value></value>
-    </param>
-    <param>
-      <key>width2</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alpha3</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>color3</key>
-      <value>"green"</value>
-    </param>
-    <param>
-      <key>label3</key>
-      <value></value>
-    </param>
-    <param>
-      <key>width3</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alpha4</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>color4</key>
-      <value>"black"</value>
-    </param>
-    <param>
-      <key>label4</key>
-      <value></value>
-    </param>
-    <param>
-      <key>width4</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alpha5</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>color5</key>
-      <value>"cyan"</value>
-    </param>
-    <param>
-      <key>label5</key>
-      <value></value>
-    </param>
-    <param>
-      <key>width5</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alpha6</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>color6</key>
-      <value>"magenta"</value>
-    </param>
-    <param>
-      <key>label6</key>
-      <value></value>
-    </param>
-    <param>
-      <key>width6</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alpha7</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>color7</key>
-      <value>"yellow"</value>
-    </param>
-    <param>
-      <key>label7</key>
-      <value></value>
-    </param>
-    <param>
-      <key>width7</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alpha8</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>color8</key>
-      <value>"dark red"</value>
-    </param>
-    <param>
-      <key>label8</key>
-      <value></value>
-    </param>
-    <param>
-      <key>width8</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>alpha9</key>
-      <value>1.0</value>
-    </param>
-    <param>
-      <key>color9</key>
-      <value>"dark green"</value>
-    </param>
-    <param>
-      <key>label9</key>
-      <value></value>
-    </param>
-    <param>
-      <key>width9</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>name</key>
-      <value>Raw input spectra</value>
-    </param>
-    <param>
-      <key>nconnections</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>ref_level</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>showports</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>update_time</key>
-      <value>0.10</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-    <param>
-      <key>x_axis_label</key>
-      <value>"Frequency (MHz)"</value>
-    </param>
-    <param>
-      <key>x_start</key>
-      <value>(ifreq-samp_rate/2)/1.0e6</value>
-    </param>
-    <param>
-      <key>x_step</key>
-      <value>fincr</value>
-    </param>
-    <param>
-      <key>x_units</key>
-      <value>"MHz"</value>
-    </param>
-    <param>
-      <key>ymax</key>
-      <value>10</value>
-    </param>
-    <param>
-      <key>ymin</key>
-      <value>-120</value>
-    </param>
-    <param>
-      <key>y_axis_label</key>
-      <value>"Rel. Power(dB)"</value>
-    </param>
-    <param>
-      <key>y_units</key>
       <value>"dB"</value>
     </param>
   </block>
@@ -8008,7 +7788,7 @@ happy with it.</value>
     </param>
     <param>
       <key>gui_hint</key>
-      <value>spec_tab@3</value>
+      <value>spec_tab@2</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -8490,108 +8270,6 @@ happy with it.</value>
     </param>
   </block>
   <block>
-    <key>single_pole_iir_filter_xx</key>
-    <param>
-      <key>alpha</key>
-      <value>fft_avg*0.01</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1328, 316)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>single_pole_iir_filter_xx_3</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
-    <key>single_pole_iir_filter_xx</key>
-    <param>
-      <key>alpha</key>
-      <value>fft_avg*0.01</value>
-    </param>
-    <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>affinity</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1328, 380)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>single_pole_iir_filter_xx_3_0</value>
-    </param>
-    <param>
-      <key>maxoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>minoutbuf</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>type</key>
-      <value>float</value>
-    </param>
-    <param>
-      <key>vlen</key>
-      <value>fftsize</value>
-    </param>
-  </block>
-  <block>
     <key>qtgui_tab_widget</key>
     <param>
       <key>alias</key>
@@ -8671,7 +8349,7 @@ happy with it.</value>
     </param>
     <param>
       <key>label2</key>
-      <value>Raw input(s)</value>
+      <value>Waterfall</value>
     </param>
     <param>
       <key>label3</key>
@@ -8703,7 +8381,7 @@ happy with it.</value>
     </param>
     <param>
       <key>num_tabs</key>
-      <value>4</value>
+      <value>3</value>
     </param>
   </block>
   <block>
@@ -8923,6 +8601,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.write("%10.7f," % tpwra)
                 f.write("%10.7f," % tpwrb)
                 f.write("%10.7f," % diff)
+                f.write("%10.7f," % added)
                 f.write("%10.7f,%10.7f\n" %  (corr_cos, corr_sin))
                 f.close()
         
@@ -9339,6 +9018,14 @@ def plotlabel(mode, which):
     di = ary[which]
     return (di[mode])
 
+def get_spec_labels(mode):
+    w1 = {"total" : "SKY", "tp" : "SKY", "diff" : "SKY", "differential" : "SKY", "interf" : "East", "interferometer" : "East",
+        "correlator" : "East"}
+    w2 = {"total" : "Zero", "tp" : "Zero", "diff" : "REF", "differential" : "REF", "interf" : "West", "interferometer" : "West",
+        "correlator" : "West"}
+    
+    return ([w1[mode],w2[mode]])
+    
 </value>
     </param>
     <param>
@@ -9860,6 +9547,18 @@ A bunch of helper bits and pieces for logging, etc</value>
     <sink_key>1</sink_key>
   </connection>
   <connection>
+    <source_block_id>blocks_add_const_vxx_0_1</source_block_id>
+    <sink_block_id>qtgui_vector_sink_f_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>1</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_add_const_vxx_0_1</source_block_id>
+    <sink_block_id>qtgui_vector_sink_f_0_1</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>1</sink_key>
+  </connection>
+  <connection>
     <source_block_id>blocks_add_const_vxx_1</source_block_id>
     <sink_block_id>blocks_stream_to_vector_0_0</sink_block_id>
     <source_key>0</source_key>
@@ -9980,6 +9679,12 @@ A bunch of helper bits and pieces for logging, etc</value>
     <sink_key>0</sink_key>
   </connection>
   <connection>
+    <source_block_id>blocks_multiply_const_vxx_1</source_block_id>
+    <sink_block_id>blocks_add_const_vxx_0_1</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
+  </connection>
+  <connection>
     <source_block_id>blocks_multiply_const_vxx_2</source_block_id>
     <sink_block_id>blocks_sub_xx_0</sink_block_id>
     <source_key>0</source_key>
@@ -10005,12 +9710,6 @@ A bunch of helper bits and pieces for logging, etc</value>
   </connection>
   <connection>
     <source_block_id>blocks_nlog10_ff_0</source_block_id>
-    <sink_block_id>single_pole_iir_filter_xx_3</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_nlog10_ff_0</source_block_id>
     <sink_block_id>virtual_sink_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
@@ -10018,12 +9717,6 @@ A bunch of helper bits and pieces for logging, etc</value>
   <connection>
     <source_block_id>blocks_nlog10_ff_0_0</source_block_id>
     <sink_block_id>fft2_probe</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>blocks_nlog10_ff_0_0</source_block_id>
-    <sink_block_id>single_pole_iir_filter_xx_3_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -10134,18 +9827,6 @@ A bunch of helper bits and pieces for logging, etc</value>
     <sink_block_id>blocks_multiply_const_vxx_2</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>single_pole_iir_filter_xx_3</source_block_id>
-    <sink_block_id>qtgui_vector_sink_f_1</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>0</sink_key>
-  </connection>
-  <connection>
-    <source_block_id>single_pole_iir_filter_xx_3_0</source_block_id>
-    <sink_block_id>qtgui_vector_sink_f_1</sink_block_id>
-    <source_key>0</source_key>
-    <sink_key>1</sink_key>
   </connection>
   <connection>
     <source_block_id>virtual_source_0</source_block_id>

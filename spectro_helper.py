@@ -207,6 +207,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.write("%10.7f," % tpwra)
                 f.write("%10.7f," % tpwrb)
                 f.write("%10.7f," % diff)
+                f.write("%10.7f," % added)
                 f.write("%10.7f,%10.7f\n" %  (corr_cos, corr_sin))
                 f.close()
         
@@ -623,3 +624,11 @@ def plotlabel(mode, which):
     di = ary[which]
     return (di[mode])
 
+def get_spec_labels(mode):
+    w1 = {"total" : "SKY", "tp" : "SKY", "diff" : "SKY", "differential" : "SKY", "interf" : "East", "interferometer" : "East",
+        "correlator" : "East"}
+    w2 = {"total" : "Zero", "tp" : "Zero", "diff" : "REF", "differential" : "REF", "interf" : "West", "interferometer" : "West",
+        "correlator" : "West"}
+    
+    return ([w1[mode],w2[mode]])
+    
