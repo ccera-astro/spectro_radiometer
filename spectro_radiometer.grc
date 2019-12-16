@@ -879,7 +879,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>spectro_helper.fft_log(fft_probed,fft2_probed,corr_probed,ifreq,samp_rate,longitude,enable_normalize,prefix,declination,rfilist,dcgain,fft_avg,mode,zerotime,decfile)</value>
+      <value>spectro_helper.fft_log(fft_probed,fft2_probed,corr_probed,ifreq,samp_rate,longitude,enable_normalize,prefix,declination,rfilist,dcgain,fft_avg,mode,zerotime,decfile,tp_interval,spec_interval)</value>
     </param>
   </block>
   <block>
@@ -8270,6 +8270,53 @@ happy with it.</value>
     </param>
   </block>
   <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1832, 2480)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>spec_interval</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Spectral Logging Interval</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>hide</key>
+      <value>none</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>intx</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>15</value>
+    </param>
+  </block>
+  <block>
     <key>qtgui_tab_widget</key>
     <param>
       <key>alias</key>
@@ -8441,7 +8488,7 @@ def do_annotation(ra,dec,baseline,annotation,bw,abw,freq,srate,prefix):
     return True
     
     
-def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt,decfile):
+def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt,decfile,tpi,spi):
     global fft_buffer
     global first_time
     global lastt
@@ -8586,7 +8633,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     #
     if ((time.time() - first_time) &gt; 20):
             
-        if (time.time() - lasttpt) &gt;= 2:
+        if (time.time() - lasttpt) &gt;= tpi:
             lasttpt = time.time()
             
             ltp = time.gmtime()
@@ -8605,7 +8652,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.write("%10.7f,%10.7f\n" %  (corr_cos, corr_sin))
                 f.close()
         
-        if (time.time() - lastt) &gt;= 15:
+        if (time.time() - lastt) &gt;= spi:
             lastt = time.time()
             ltp = time.gmtime()
             
@@ -8627,7 +8674,10 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                     st_h += float(st[2])/3600.0
                         
                     for i in range(0,len(ffts[w])):
-                        f.write("%6.2f," % (math.log10(ffts[w][i])*10.0))
+                        try:
+                            f.write("%6.2f," % (math.log10(ffts[w][i])*10.0))
+                        except:
+                            f.write("???,")
                     f.write ("\n")
                     f.close()
                     
@@ -9095,6 +9145,53 @@ A bunch of helper bits and pieces for logging, etc</value>
     <param>
       <key>value</key>
       <value>2.56e6</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1664, 2488)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>tp_interval</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>TP Logging Interval</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>hide</key>
+      <value>none</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>intx</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>2</value>
     </param>
   </block>
   <block>

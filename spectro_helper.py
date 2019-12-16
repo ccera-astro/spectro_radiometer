@@ -47,7 +47,7 @@ def do_annotation(ra,dec,baseline,annotation,bw,abw,freq,srate,prefix):
     return True
     
     
-def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt,decfile):
+def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt,decfile,tpi,spi):
     global fft_buffer
     global first_time
     global lastt
@@ -192,7 +192,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     #
     if ((time.time() - first_time) > 20):
             
-        if (time.time() - lasttpt) >= 2:
+        if (time.time() - lasttpt) >= tpi:
             lasttpt = time.time()
             
             ltp = time.gmtime()
@@ -211,7 +211,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                 f.write("%10.7f,%10.7f\n" %  (corr_cos, corr_sin))
                 f.close()
         
-        if (time.time() - lastt) >= 15:
+        if (time.time() - lastt) >= spi:
             lastt = time.time()
             ltp = time.gmtime()
             
@@ -233,7 +233,10 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                     st_h += float(st[2])/3600.0
                         
                     for i in range(0,len(ffts[w])):
-                        f.write("%6.2f," % (math.log10(ffts[w][i])*10.0))
+                        try:
+                            f.write("%6.2f," % (math.log10(ffts[w][i])*10.0))
+                        except:
+                            f.write("???,")
                     f.write ("\n")
                     f.close()
                     
