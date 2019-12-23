@@ -8,6 +8,7 @@ import math
 import numpy
 
 
+zeromap = {}
 
 lastt = time.time()
 lasttpt = time.time()
@@ -62,6 +63,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     global freq_mask_processed
     global pacet
     global corr_cos, corr_sin
+    global zeromap
 
     preflist=prefix.split(",")
     
@@ -240,7 +242,8 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                     f.write ("\n")
                     f.close()
                     
-                    if (math.fabs(st_h - zt) < (35.0/3600.0)):
+                    d_ndx = int(decln)
+                    if (d_ndx in zeromap and (st_h - zeromap[d_ndx]) < (35.0/3600.0)):
                         baseline_setter(1)
             return 1
         
@@ -635,3 +638,21 @@ def get_spec_labels(mode):
     
     return ([w1[mode],w2[mode]])
     
+def init_zero_map(zf):
+    global zeromap
+    cnt = 0
+    
+    if ("" != zf and zf != None):
+        try:
+            f = open(zf, "r")
+            lines = f.readlines()
+            f.close()
+            for l in lines:
+                l = l.replace("\n", "")
+                ts = l.split(" ")
+                zeromap[int(ts[0])] = float(ts[1])
+                cnt += 1
+        except:
+            pass
+    return cnt
+            
