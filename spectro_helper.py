@@ -240,7 +240,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                     f.write ("\n")
                     f.close()
                     
-                    if (math.fabs(st_h - zt) < (60.0/3600.0)):
+                    if (math.fabs(st_h - zt) < (35.0/3600.0)):
                         baseline_setter(1)
             return 1
         

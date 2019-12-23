@@ -6427,7 +6427,7 @@ happy with it.</value>
     <key>qtgui_vector_sink_f</key>
     <param>
       <key>autoscale</key>
-      <value>False</value>
+      <value>True</value>
     </param>
     <param>
       <key>average</key>
@@ -6969,7 +6969,7 @@ happy with it.</value>
     <key>qtgui_vector_sink_f</key>
     <param>
       <key>autoscale</key>
-      <value>False</value>
+      <value>True</value>
     </param>
     <param>
       <key>average</key>
@@ -8169,7 +8169,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
                     f.write ("\n")
                     f.close()
                     
-                    if (math.fabs(st_h - zt) &lt; (60.0/3600.0)):
+                    if (math.fabs(st_h - zt) &lt; (35.0/3600.0)):
                         baseline_setter(1)
             return 1
         
