@@ -8913,10 +8913,10 @@ def curr_diff(pace,normalize,expected,which):
         return ([-120.0]*expected)
     
     if (numpy.sum(basebuf[which]) == 0.0):
-        x = smooth(inbuf[which])
+        x = inbuf[which]
     else:
         y = map(operator.add, basebuf[which], [1.0e-24]*len(basebuf[which]))
-        x = map(operator.truediv, smooth(inbuf[which]), smooth(y))
+        x = map(operator.truediv, inbuf[which], smooth(y,a=0.5))
     x = numpy.add(x, [1.0e-24]*len(x))
     x = numpy.abs(x)
     return numpy.multiply(numpy.log10(x),[10.0]*len(x))
