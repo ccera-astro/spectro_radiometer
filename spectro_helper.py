@@ -250,6 +250,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     return 0
  
 def smooth(vect,a=0.4):
+    return vect
     ovect=[0]*len(vect)
     val=vect[0]
     for i in range(0,len(vect)):
