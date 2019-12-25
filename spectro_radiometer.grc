@@ -510,7 +510,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>sinc*np.hanning(nphase*nchan)</value>
+      <value>sinc*np.hamming(nphase*nchan)</value>
     </param>
   </block>
   <block>
@@ -1565,6 +1565,33 @@
     </param>
   </block>
   <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1752, 2572)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>save_filter</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>open("poopy.dat", "w").write(str(list(custom_window)))</value>
+    </param>
+  </block>
+  <block>
     <key>variable_qtgui_label</key>
     <param>
       <key>comment</key>
@@ -1705,7 +1732,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>np.arange(-np.pi*nphase/2.0, np.pi*nphase/2.0, np.pi/nchan)</value>
+      <value>np.arange(-np.pi*4/2.0, np.pi*4/2.0, (np.pi/nchan)*(4/nphase))</value>
     </param>
   </block>
   <block>
