@@ -607,12 +607,12 @@ def get_decln(decln,decfile,dummy):
     try:
         newdec = open(decfile,"r").readline().strip("\n")
         newdec = float(newdec)
-        if (newdec != f_decln):
-            f_decln = [time.time(), none]
+        if (newdec != f_decln[1]):
+            f_decln = [time.time(), newdec]
     except:
         pass
     
-    if (decln != ui_decln):
+    if (decln != ui_decln[1]):
         ui_decln = [time.time(), decln]
 
     if (f_decln[0] > ui_decln[0]):
