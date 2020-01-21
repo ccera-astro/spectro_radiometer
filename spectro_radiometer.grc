@@ -8778,15 +8778,17 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     if (first_time == 0):
         first_time = int(time.time())
     
-    dpwr = tpwra   
-    apwr = 0.0
     if (mode == "differential" or mode == "diff"):
         dpwr = diff
         apwr = added
     
-    if (mode == "interferometer" or mode == "corr" or mode == "correlator"):
+    elif (mode == "interferometer" or mode == "corr" or mode == "correlator"):
         dpwr = corr_cos
         apwr = corr_sin
+    
+    else:
+        dpwr = tpwra   
+        apwr = 0.0
 
     #
     # Allow integrators to settle, etc, so don't write "ramp up" data
@@ -8960,6 +8962,7 @@ def get_tp_vect(pacer):
     global tp_vect
     global tp_vect2
     global dpwr
+    global apwr
     global TPLEN
     
     
