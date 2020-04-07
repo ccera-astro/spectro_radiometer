@@ -363,6 +363,33 @@
     </param>
   </block>
   <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(416, 268)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>clk_deriv</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>None if clock in ["none", "default"] else clock</value>
+    </param>
+  </block>
+  <block>
     <key>variable_function_probe</key>
     <param>
       <key>block_id</key>
@@ -1912,33 +1939,6 @@
     <param>
       <key>type</key>
       <value>real</value>
-    </param>
-  </block>
-  <block>
-    <key>variable</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
-      <value>(1608, 2004)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>variable_0</value>
-    </param>
-    <param>
-      <key>value</key>
-      <value>spectro_helper.init_zero_map(zerofile)</value>
     </param>
   </block>
   <block>
@@ -4196,6 +4196,33 @@ Conjugate multiply of the two streams</value>
     <param>
       <key>type</key>
       <value>complex</value>
+    </param>
+  </block>
+  <block>
+    <key>virtual_sink</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(736, 1428)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>cronk</value>
+    </param>
+    <param>
+      <key>stream_id</key>
+      <value>pfb1</value>
     </param>
   </block>
   <block>
@@ -6865,11 +6892,11 @@ happy with it.</value>
     </param>
     <param>
       <key>clock_source0</key>
-      <value>clock</value>
+      <value></value>
     </param>
     <param>
       <key>time_source0</key>
-      <value>ppstime</value>
+      <value></value>
     </param>
     <param>
       <key>clock_source1</key>
@@ -6949,7 +6976,7 @@ happy with it.</value>
     </param>
     <param>
       <key>sync</key>
-      <value>sync</value>
+      <value>pc_clock</value>
     </param>
   </block>
   <block>
@@ -9551,33 +9578,6 @@ A bunch of helper bits and pieces for logging, etc</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(736, 1428)</value>
-    </param>
-    <param>
-      <key>_rotation</key>
-      <value>0</value>
-    </param>
-    <param>
-      <key>id</key>
-      <value>virtual_sink_3_0</value>
-    </param>
-    <param>
-      <key>stream_id</key>
-      <value>pfb1</value>
-    </param>
-  </block>
-  <block>
-    <key>virtual_sink</key>
-    <param>
-      <key>comment</key>
-      <value></value>
-    </param>
-    <param>
-      <key>_enabled</key>
-      <value>True</value>
-    </param>
-    <param>
-      <key>_coordinate</key>
       <value>(2792, 2100)</value>
     </param>
     <param>
@@ -10283,7 +10283,7 @@ A bunch of helper bits and pieces for logging, etc</value>
   </connection>
   <connection>
     <source_block_id>blocks_stream_to_vector_0_0</source_block_id>
-    <sink_block_id>virtual_sink_3_0</sink_block_id>
+    <sink_block_id>cronk</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
