@@ -149,7 +149,8 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
         w += 1
     
     
-    atp=0.02
+    atp=a
+    
     #
     # Gain settings
     #
