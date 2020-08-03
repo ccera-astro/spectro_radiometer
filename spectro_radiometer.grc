@@ -807,18 +807,18 @@
     </param>
     <param>
       <key>poll_rate</key>
-      <value>15</value>
+      <value>fft_hz</value>
     </param>
   </block>
   <block>
-    <key>variable_qtgui_chooser</key>
+    <key>variable_qtgui_range</key>
     <param>
       <key>comment</key>
       <value></value>
     </param>
     <param>
       <key>value</key>
-      <value>4</value>
+      <value>1</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -826,7 +826,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(232, 2252)</value>
+      <value>(552, 2400)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -841,72 +841,36 @@
       <value>fft_avg</value>
     </param>
     <param>
-      <key>label0</key>
-      <value>Low</value>
-    </param>
-    <param>
-      <key>label1</key>
-      <value>Medium</value>
-    </param>
-    <param>
-      <key>label2</key>
-      <value>High</value>
-    </param>
-    <param>
-      <key>label3</key>
-      <value></value>
-    </param>
-    <param>
-      <key>label4</key>
-      <value></value>
-    </param>
-    <param>
       <key>label</key>
-      <value>FFT Averaging</value>
+      <value>Int. Time (Sec.)</value>
     </param>
     <param>
-      <key>labels</key>
-      <value>[]</value>
-    </param>
-    <param>
-      <key>num_opts</key>
-      <value>3</value>
-    </param>
-    <param>
-      <key>option0</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>option1</key>
-      <value>2</value>
-    </param>
-    <param>
-      <key>option2</key>
-      <value>1</value>
-    </param>
-    <param>
-      <key>option3</key>
-      <value>3</value>
-    </param>
-    <param>
-      <key>option4</key>
-      <value>4</value>
-    </param>
-    <param>
-      <key>options</key>
-      <value>[0, 1, 2]</value>
+      <key>min_len</key>
+      <value>200</value>
     </param>
     <param>
       <key>orient</key>
-      <value>Qt.QVBoxLayout</value>
+      <value>Qt.Horizontal</value>
     </param>
     <param>
-      <key>type</key>
-      <value>int</value>
+      <key>start</key>
+      <value>0.5</value>
+    </param>
+    <param>
+      <key>step</key>
+      <value>0.5</value>
+    </param>
+    <param>
+      <key>stop</key>
+      <value>60</value>
+    </param>
+    <param>
+      <key>rangeType</key>
+      <value>float</value>
     </param>
     <param>
       <key>widget</key>
-      <value>combo_box</value>
+      <value>counter</value>
     </param>
   </block>
   <block>
@@ -921,7 +885,34 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(616, 172)</value>
+      <value>(616, 244)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>fft_hz</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>15</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(616, 108)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -933,7 +924,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>spectro_helper.fft_log(fft_probed,fft2_probed,corr_probed,ifreq,samp_rate,longitude,enable_normalize,prefix,declination,rfilist,dcgain,fft_avg,mode,zerotime,decfile,tp_interval,spec_interval)</value>
+      <value>spectro_helper.fft_log(fft_probed,fft2_probed,corr_probed,ifreq,samp_rate,longitude,enable_normalize,prefix,declination,rfilist,dcgain,fft_avg,mode,zerotime,decfile,tp_interval,spec_interval,fft_hz)</value>
     </param>
   </block>
   <block>
@@ -976,7 +967,34 @@
     </param>
     <param>
       <key>poll_rate</key>
-      <value>15</value>
+      <value>fft_hz</value>
+    </param>
+  </block>
+  <block>
+    <key>variable</key>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(248, 1684)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>fftrate</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>float(samp_rate/fftsize)</value>
     </param>
   </block>
   <block>
@@ -8254,7 +8272,7 @@ happy with it.</value>
     <key>single_pole_iir_filter_xx</key>
     <param>
       <key>alpha</key>
-      <value>1.0/(samp_rate/(0.1*fftsize))</value>
+      <value>spectro_helper.getalpha(fft_hz/2.0,fftrate)</value>
     </param>
     <param>
       <key>alias</key>
@@ -8305,7 +8323,7 @@ happy with it.</value>
     <key>single_pole_iir_filter_xx</key>
     <param>
       <key>alpha</key>
-      <value>1.0/(samp_rate/(0.1*fftsize))</value>
+      <value>spectro_helper.getalpha(fft_hz/2.0,fftrate)</value>
     </param>
     <param>
       <key>alias</key>
@@ -8633,6 +8651,11 @@ import operator
 import math
 import numpy
 
+def getalpha(corner, srate):
+	q = math.pow(math.e,-2.0*(corner/srate))
+	alpha = 1.0 - q
+	return alpha
+
 
 zeromap = {}
 
@@ -8674,7 +8697,7 @@ def do_annotation(ra,dec,baseline,annotation,bw,abw,freq,srate,prefix):
     return True
     
     
-def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt,decfile,tpi,spi):
+def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt,decfile,tpi,spi,hz):
     global fft_buffer
     global first_time
     global lastt
@@ -8693,7 +8716,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
 
     preflist=prefix.split(",")
     
-    if ((time.time() - pacet) &lt; 0.05):
+    if ((time.time() - pacet) &lt; (1.0/hz)):
         return False
     
     pacet = time.time()
@@ -8726,7 +8749,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     pwra = 0.0
     pwrb = 0.0
     diff = 0.0
-    a = 0.05 * ffa
+    a = getalpha(1.0/ffa, hz)
 
     
     #
@@ -8796,8 +8819,11 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     corr_cos = (atp * corr_a) + ((1.0 - atp)*corr_cos)
     corr_sin = (atp * corr_b) + ((1.0 - atp)*corr_sin)
 
-    tpwra = (atp * pwra) + ((1.0 - atp)*tpwra)
-    tpwrb = (atp * pwrb) + ((1.0 - atp)*tpwrb)
+    #tpwra = (atp * pwra) + ((1.0 - atp)*tpwra)
+    #tpwrb = (atp * pwrb) + ((1.0 - atp)*tpwrb)
+    
+    tpwra = pwra
+    tpwrb = pwrb
     
     diff = tpwra - tpwrb
     added = tpwra + tpwrb

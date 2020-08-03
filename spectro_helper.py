@@ -7,6 +7,11 @@ import operator
 import math
 import numpy
 
+def getalpha(corner, srate):
+	q = math.pow(math.e,-2.0*(corner/srate))
+	alpha = 1.0 - q
+	return alpha
+
 
 zeromap = {}
 
@@ -48,7 +53,7 @@ def do_annotation(ra,dec,baseline,annotation,bw,abw,freq,srate,prefix):
     return True
     
     
-def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt,decfile,tpi,spi):
+def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mode,zt,decfile,tpi,spi,hz):
     global fft_buffer
     global first_time
     global lastt
@@ -67,7 +72,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
 
     preflist=prefix.split(",")
     
-    if ((time.time() - pacet) < 0.05):
+    if ((time.time() - pacet) < (1.0/hz)):
         return False
     
     pacet = time.time()
@@ -100,7 +105,7 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     pwra = 0.0
     pwrb = 0.0
     diff = 0.0
-    a = 0.05 * ffa
+    a = getalpha(1.0/ffa, hz)
 
     
     #
@@ -170,8 +175,11 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     corr_cos = (atp * corr_a) + ((1.0 - atp)*corr_cos)
     corr_sin = (atp * corr_b) + ((1.0 - atp)*corr_sin)
 
-    tpwra = (atp * pwra) + ((1.0 - atp)*tpwra)
-    tpwrb = (atp * pwrb) + ((1.0 - atp)*tpwrb)
+    #tpwra = (atp * pwra) + ((1.0 - atp)*tpwra)
+    #tpwrb = (atp * pwrb) + ((1.0 - atp)*tpwrb)
+    
+    tpwra = pwra
+    tpwrb = pwrb
     
     diff = tpwra - tpwrb
     added = tpwra + tpwrb
