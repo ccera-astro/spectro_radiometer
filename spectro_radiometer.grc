@@ -818,7 +818,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>1</value>
+      <value>integration</value>
     </param>
     <param>
       <key>_enabled</key>
@@ -862,7 +862,7 @@
     </param>
     <param>
       <key>stop</key>
-      <value>60</value>
+      <value>300</value>
     </param>
     <param>
       <key>rangeType</key>
@@ -5039,6 +5039,53 @@ Conjugate multiply of the two streams</value>
     <param>
       <key>import</key>
       <value>import numpy as np</value>
+    </param>
+  </block>
+  <block>
+    <key>parameter</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(1504, 2568)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>integration</value>
+    </param>
+    <param>
+      <key>label</key>
+      <value>Integration Time (Sec.)</value>
+    </param>
+    <param>
+      <key>short_id</key>
+      <value></value>
+    </param>
+    <param>
+      <key>hide</key>
+      <value>none</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>eng_float</value>
+    </param>
+    <param>
+      <key>value</key>
+      <value>0.5</value>
     </param>
   </block>
   <block>
