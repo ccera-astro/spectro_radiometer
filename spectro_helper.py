@@ -176,8 +176,8 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     corr_cos = (atp * corr_a) + ((1.0 - atp)*corr_cos)
     corr_sin = (atp * corr_b) + ((1.0 - atp)*corr_sin)
 
-    #tpwra = (atp * pwra) + ((1.0 - atp)*tpwra)
-    #tpwrb = (atp * pwrb) + ((1.0 - atp)*tpwrb)
+    tpwra = (atp * pwra) + ((1.0 - atp)*tpwra)
+    tpwrb = (atp * pwrb) + ((1.0 - atp)*tpwrb)
     
     tpwra = pwra
     tpwrb = pwrb
