@@ -8870,8 +8870,6 @@ def fft_log(p,p2,corr,frq,bw,longitude,normalize,prefix,decln,flist,again,ffa,mo
     tpwra = (atp * pwra) + ((1.0 - atp)*tpwra)
     tpwrb = (atp * pwrb) + ((1.0 - atp)*tpwrb)
     
-    tpwra = pwra
-    tpwrb = pwrb
     
     diff = tpwra - tpwrb
     added = tpwra + tpwrb
